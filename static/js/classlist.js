@@ -34,14 +34,14 @@ function search(keyword) {
                 let class_stime = a['class_time'][0]['start_time']
                 let class_etime = a['class_time'][0]['end_time']
                 
-                // let class_time = class_stime.substr(0, 2) + ":" + class_stime.substr(2, 2) + "-" + class_etime.substr(0, 2) + ":" + class_etime.substr(2, 2)
+                let class_time = class_stime.substr(0, 2) + ":" + class_stime.substr(2, 2) + "-" + class_etime.substr(0, 2) + ":" + class_etime.substr(2, 2)
 
                 let temp_html = `<tr>
                                     <td>${class_code}</td>
                                     <td>${class_name}</td>
                                     <td>${instructor}</td>
                                     <td>${class_day}</td>
-                                    <td>${class_stime} - ${class_etime}</td>
+                                    <td>${class_time}</td>
                                     <td><button type="button" onclick="shoppingBasket('${class_code}')" class="showBtn">장바구니담기</button></td>
                                 </tr>`
                 $('#column').append(temp_html)
@@ -66,12 +66,13 @@ function show_comment() {
             let class_stime = a['class_time'][0]['start_time']
             let class_etime = a['class_time'][0]['end_time']
 
+            let class_time = class_stime.substr(0, 2) + ":" + class_stime.substr(2, 2) + "-" + class_etime.substr(0, 2) + ":" + class_etime.substr(2, 2);
             let temp_html = `<tr>
                                     <td>${class_code}</td>
                                     <td>${class_name}</td>
                                     <td>${instructor}</td>
                                     <td>${class_day}</td>
-                                    <td>${class_stime} - ${class_etime} </td>
+                                    <td>${class_time}</td>
                                     <td><button type="button" onclick="shoppingBasket('${class_code}')" class="showBtn">장바구니담기</button></td>
                             </tr>`
             $('#column').append(temp_html)
