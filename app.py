@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://sparta:test@cluster0.nxpuz9m.mongodb.net/?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://sparta:test@cluster0.mqf1zqw.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
 
 #######################################페이지들###########################
@@ -19,7 +19,7 @@ def register_page():
 
 @app.route("/classes")
 def classpage():
-    #강의목록 페이지
+    #강의목록 페이지/
     return render_template('classlist.html')
 3
 @app.route("/wishlist")
@@ -32,30 +32,39 @@ def myclass():
     #신청내역페이지
     return render_template('myclasspage.html')
 
-
-############################fetch 요청 경로들##################################
-#회원가입
 @app.route("/api/registerpage", methods = ['POST'])
 def register_api():
-     #회원정보 생성
+    #회원정보 생성
     name_receive = request.form['user_name_give']
     id_receive = request.form['user_id_give']
     pw_receive = request.form['user_pw_give']
     re_pw_receive = request.form['re_pw_give']
-        
+
+
     doc = {
-            'user_name' : name_receive,
-            'user_id' : id_receive,
-            'user_pw' : pw_receive,
-            're_pw' : re_pw_receive
+        'user_name' : name_receive,
+        'user_id' : id_receive,
+        'user_pw' : pw_receive,        
     }
-    db.register.insert_one(doc)
-    return jsonify({'msg':'입학을 축하합니다.'})
+    db.user_list.insert_one(doc)
+    print(doc)
+    return jsonify({'msg':'가입이 완료되었습니다.'})
+
 
 @app.route("/api/login", methods = ['POST']) #POST로 데이터 담거나, GET으로 파라미터 쿼리 날리기
 def login_api():
+    id_receive = request.form['user_id_give']
+    pw_receive = request.form['user_pw_give']
+
+    user = db.user_list.find_one({'user_id':id_receive},{'_id':False}) 
+
+    user['user_pw'] == pw_receive
+    print(user['user_pw'] == pw_receive)
+    if user['user_pw'] == pw_receive : 
+        return jsonify({'result' : 1}) 
+    else : 
+        return jsonify({'result' : 0}) 
     #로그인 요청
-    return jsonify({'msg' : '필요한 데이터 담기'})
 
 @app.route("/api/classlist", methods = ['GET'])
 def get_classlist_api():
