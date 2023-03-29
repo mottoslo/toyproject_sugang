@@ -32,8 +32,6 @@ def myclass():
     #신청내역페이지
     return render_template('myclasspage.html')
 
-############################fetch 요청 경로들##################################
-
 @app.route("/api/registerpage", methods = ['POST'])
 def register_api():
     #회원정보 생성
@@ -41,6 +39,7 @@ def register_api():
     id_receive = request.form['user_id_give']
     pw_receive = request.form['user_pw_give']
     re_pw_receive = request.form['re_pw_give']
+
 
     doc = {
         'user_name' : name_receive,
@@ -69,13 +68,33 @@ def login_api():
 
 @app.route("/api/classlist", methods = ['GET'])
 def get_classlist_api():
-    #강의목록 받아오기 요청
-    return jsonify({'msg' : '필요한 데이터 담기'})
+    # 전체리스트 요청
+    all_classList = list(db.class_list.find({},{'_id':False}))
+    return jsonify({'result': all_classList})
+
+@app.route("/api/searchlist", methods = ['POST'])
+def get_searchlist_api():
+    # 검색하여 리스트 요청
+    keyword = request.form['keyword']
+    searchdb = list(db.class_list.find(
+        {'$or':[{'class_name':{'$regex':keyword}},
+                {'class_code':{'$regex':keyword}},
+                {'instructor':{'$regex':keyword}}]},
+                {'_id':False}))
+    print(searchdb)
+    return jsonify({'keyword': searchdb})
 
 @app.route("/api/wish_button", methods = ['POST'])
 def wish_button_api():
     #희망과목 담기 요청
-    return jsonify({'msg' : '필요한 데이터 담기'})
+    wish_class = request.form['wishlist']
+    # db.user_info.insert_one({'wishlist' : [wish_class]})
+    db.user_info.update_one(
+        {'user_id':'르탄이'},
+        {'$push':{'wishlist': wish_class}}
+    )
+    return jsonify({'msg' : 'user_id에 class_code 넣었슴다~'})
+
 
 @app.route("/api/get_wishlist", methods = ['GET'])
 def get_wishlist_api():
@@ -90,17 +109,17 @@ def enroll_button_api():
 
 @app.route("/api/wishlist_delete", methods=["POST"])
 def wishlist_delete_api():
-    #희망과목 삭제버튼
+    #신청내역페이지
     return jsonify({'msg' : '필요한 데이터 담기'})
 
-@app.route("/api/enroll_list", methods=["POST"])
+@app.route("/api/enroll_list", methods=["GET"])
 def get_enroll_list_api():
     #신청내역페이지
     return jsonify({'msg' : '필요한 데이터 담기'})
 
 @app.route("/api/enroll_delete", methods=["POST"])
 def delete_enroll_api():
-    #신청내역삭제요청
+    #신청내역페이지
     return jsonify({'msg' : '필요한 데이터 담기'})
 
 
