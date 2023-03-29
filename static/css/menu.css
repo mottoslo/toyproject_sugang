@@ -10,8 +10,17 @@
     height : 70px;
     width : auto;
 }
+
 .bar-and-content{
-    background-clip: 10;
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: left;
+}
+
+.content-area{
+    /* background-color: brown; */
+    width: 100%;
 }
 
 .side-bar{

@@ -6,13 +6,81 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../static/css/menu.css">?
+    <link rel="stylesheet" href="../static/css/menu.css">
+    <link rel="stylesheet" href="../static/css/timetable.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<style>
+<script>
+    // class_list : wishlist페이지에서는 wishlist [과목코드들], 신청내역페이지에서는 enrollment [과목코드들]
+    function drawtable() {
+        let class_list = ['STAT420']
 
+        let num_hrs = 10;
+        $('#timetableid').append(
+            `<tr>
+                    <th></th>
+                    <th style = 'background-color: red;'>월</th>
+                    <th>화</th>
+                    <th>수</th>
+                    <th>목</th>
+                    <th>금</th>
+                    <th>토</th>
+                </tr>`
+        )
+        for (var i = 1; i < num_hrs + 1; i++) {
+            $('#timetableid').append(
+                `<tr>
+                    <th rowspan = '4'>${i + 8}</th>
+                    <th id = 'p${i}1'>${i}1</th>
+                    <th id = 'p${i + 10}1'>${i + 10}1</th>
+                    <th id = 'p${i + 20}1'>${i + 20}1</th>
+                    <th id = 'p${i + 30}1'>${i + 30}1</th>
+                    <th id = 'p${i + 40}1'>${i + 40}1</th>
+                    <th id = 'p${i + 50}1'>${i + 50}1</th>
+                </tr>`
+            )
 
-</style>
+            for (var j = 2; j < 5; j++) {
+                $('#timetableid').append(
+                    `<tr>
+                    <th id = 'p${i}${j}'>${i}${j}</td>
+                    <th id = 'p${i + 10}${j}'>${i + 10}${j}</th>
+                    <th id = 'p${i + 20}${j}'>${i + 20}${j}</th>
+                    <th id = 'p${i + 30}${j}'>${i + 30}${j}</th>
+                    <th id = 'p${i + 40}${j}'>${i + 40}${j}</th>
+                    <th id = 'p${i + 50}${j}'>${i + 50}${j}</th>
+                </tr>`
+                )
+            }
+        }
+
+        let formData = new FormData();
+        formData.append('code_list_len', class_list.length)
+        for (var i = 0; i < class_list.length; i++){
+            formData.append(`code_list${i}`, class_list[i])
+        }
+        fetch('api/get_table_position', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
+                let draw_info = data['result']
+                draw_info.forEach((elem) =>{
+                    positions = elem['class_pos']
+                    color = elem['class_color']
+
+                    positions.forEach((onetime_pos) =>{
+                        onetime_pos.forEach((pos) =>{
+                            $(`#p${pos}`).css('background-color', color)
+                        })
+                    })
+
+                })
+            })
+
+        // temp_poslist.forEach((elem) => {
+        //     $(`#p${elem}`).css('background-color', 'green')
+        // })
+    }
+
+</script>
 
 <body>
     <!-- 내 장바구니 보여주고, 삭제, 신청버튼, 시간표들어갈 공간 남겨두기 -->
@@ -21,85 +89,11 @@
     <div class='bar-and-content'>
         <div class='side-bar'></div>
         <div class='content-area'>
-            <table width=400 height="600" style="color: #121212" border= '#121212'>
+            <button onclick='drawtable()'>시간표그리기</button>
+
+            <table class='timetable' id='timetableid'>
                 <caption>▶ 강의 시간표 ◀</caption>
-                <tr width=19%>
-                    <th></th>
-                    <th>월</th>
-                    <th>화</th>
-                    <th>수</th>
-                    <th>목</th>
-                    <th>금</th>
-                </tr>
-                <tr>
-                    <th>9</th>
-                    <td></td>
-                    <td rowspan="2" style="background-color: #ecc369">Practical English A2</td>
-                    <td rowspan="2" style="background-color: #f08676">해부생리학2</td>
-                    <td rowspan="2" style="background-color: #70a5e9">Practical English A4</td>
-                    <td rowspan="2" style="background-color: #75ca87">다문화가족건강</td>
-                </tr>
-                <tr>
-                    <th>10</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>11</th>
-                    <td style="background-color: #f08676">해부생리학2</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td rowspan="2" style="background-color: #d397ed">창조와 몰입</td>
-                </tr>
-                <tr>
-                    <th>12</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>1</th>
-                    <td></td>
-                    <td rowspan="2" style="background-color: #a6c96f">삶과 철학</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>2</th>
-                    <td></td>
-                    <td rowspan="2" style="background-color: #7ad1c0">인간행동과심리</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>3</th>
-                    <td></td>
-                    <td></td>
-                    <td rowspan="2" style="background-color: #fbaa69">문학의이해</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>4</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td rowspan="3" style="background-color: #9d86e0">의료보건글쓰기</td>
-                </tr>
-                <tr>
-                    <th>5</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td rowspan="2" style="background-color: #f08676">노인심리학</td>
-                </tr>
-                <tr>
-                    <th>6</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+
             </table>
 
         </div>

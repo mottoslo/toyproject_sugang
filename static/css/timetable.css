@@ -1,0 +1,29 @@
+.timetable{
+    width : 800px;
+    height : 800px;
+    color: #121212;
+    border : #121212;
+}
+
+
+.timetable > td.style{
+    width : 16.6%;
+    background-color: blue;
+}
+
+.timetable > th{
+    width : 16.6%;
+}
+
+
+
+/* <tr>
+<th>9</th>
+<td></td>
+<td style="background-color: #ecc369">과목1</td>
+<td style="background-color: #f08676">과목2</td>
+<td style="background-color: #70a5e9">과목3</td>
+<td style="background-color: #75ca87">과목4</td>
+<td style="background-color: #75ca87">과목4</td>
+<td style="background-color: #75ca87">과목4</td>
+</tr> */
