@@ -5,16 +5,96 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Document</title>
     <link rel="stylesheet" href="../static/css/menu.css">
     <link rel="stylesheet" href="../static/css/timetable.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
+<style type="text/css">
+    table.blueTable {
+        border: 1px solid #1C6EA4;
+        background-color: #EEEEEE;
+        width: 100%;
+        text-align: left;
+        border-collapse: collapse;
+        margin-top: 500px
+    }
+
+
+
+    table.blueTable td,
+    table.blueTable th {
+        border: 1px solid #AAAAAA;
+        padding: 3px 2px;
+    }
+
+    table.blueTable tbody td {
+        font-size: 13px;
+    }
+
+    table.blueTable tr:nth-child(even) {
+        background: #D0E4F5;
+    }
+
+    table.blueTable thead {
+        background: #1C6EA4;
+        background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+        background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+        background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+        border-bottom: 2px solid #444444;
+    }
+
+    table.blueTable thead th {
+        font-size: 15px;
+        font-weight: bold;
+        color: #FFFFFF;
+        border-left: 2px solid #D0E4F5;
+    }
+
+    table.blueTable thead th:first-child {
+        border-left: none;
+    }
+
+    table.blueTable tfoot {
+        font-size: 14px;
+        font-weight: bold;
+        color: #FFFFFF;
+        background: #D0E4F5;
+        background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+        background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+        background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+        border-top: 2px solid #444444;
+    }
+
+    table.blueTable tfoot td {
+        font-size: 14px;
+    }
+
+    table.blueTable tfoot .links {
+        text-align: right;
+    }
+
+    table.blueTable tfoot .links a {
+        display: inline-block;
+        background: #1C6EA4;
+        color: #FFFFFF;
+        padding: 2px 8px;
+        border-radius: 5px;
+    }
+
+    td,
+    th {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
 
 <script>
     // class_list : wishlist페이지에서는 wishlist [과목코드들], 신청내역페이지에서는 enrollment [과목코드들]
     function drawtable() {
         let class_list = ['STAT420']
+
 
         let num_hrs = 10;
         $('#timetableid').append(
@@ -40,6 +120,7 @@
                     <th id = 'p${i + 50}1'>${i + 50}1</th>
                 </tr>`
             )
+
 
             for (var j = 2; j < 5; j++) {
                 $('#timetableid').append(
@@ -82,22 +163,140 @@
 
 </script>
 
+
+<script>
+    $(document).ready(function () {
+        // 로그인 세션 확인  // 신청강의 리스트 
+        show_wishlist()
+    })
+
+    function show_wishlist() {
+        let user_id = "abcd"
+        let formData = new FormData();
+        formData.append("user_id", user_id)
+
+        fetch('/api/post_wishlist', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+            let rows = data['result']
+            // console.log(data['result'])
+            $('#wishlist').empty()
+            rows.forEach((a) => {
+                let class_code = a['class_code']
+                let class_name = a['class_name']
+                let instructor = a['instructor']
+                let class_day = a['class_time']['day']
+                let class_stime = a['class_time']['start_time']
+                let class_etime = a['class_time']['end_time']
+
+                let class_time = class_stime.substr(0, 2) + ":" + class_stime.substr(2, 2) + "-" + class_etime.substr(0, 2) + ":" + class_etime.substr(2, 2)
+
+
+                let temp_html =
+                    `<tr>
+                        <td>
+                            <label><input type="checkbox" name="color" value="blue"></label>
+                        </td>
+                            <td>${class_code}</td>
+                            <td>${class_name}</td>
+                            <td>${instructor}</td>
+                            <td>${class_day}</td>
+                            <td>${class_time}</td>
+                            <td>
+                                <button onclick="enroll_button">신청</button>
+                            </td>
+                        <td>
+                            <button onclick="wishlist_delete">삭제</button>
+                        </td>
+                    </tr>`
+                $('#wishlist').append(temp_html)
+            })
+        })
+    }
+
+
+    function enroll_button() {
+        // let class_code = $('#class_code').val()
+        // let class_name = $('#class_name').val()
+        // let instructor = $('#instructor').val()
+        // let class_day = $('#class_day').val()
+        // let class_time = $('#class_time').val()
+
+
+        let formData = new FormData();
+        formData.append("class_code_give", class_code);
+        formData.append("class_name_give", class_name);
+        formData.append("instructor_give", instructor);
+        formData.append("class_day_give", class_day);
+        formData.append("class_time_give", class_time);
+
+        fetch('/api/enroll_button', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+            alert(data["msg"]);
+            console.log(date)
+            window.location.reload()
+        });
+    }
+
+    function wishlist_delete(user_id, class_code) {
+        let formData = new FormData();
+        formData.append("code_give", class_code);
+        formData.append("name_give", class_name);
+        formData.append("instructor_give", instructor);
+        formData.append("day_give", class_day);
+        formData.append("class_time_give", class_time);
+
+        fetch('/api/wishlist_delete', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+            alert(data["msg"]);
+            window.location.reload()
+        });
+    }
+
+</script>
+
 <body>
     <!-- 내 장바구니 보여주고, 삭제, 신청버튼, 시간표들어갈 공간 남겨두기 -->
     <div class='logo-home'></div>
     <div class='info-bar'></div>
     <div class='bar-and-content'>
-        <div class='side-bar'></div>
-        <div class='content-area'>
-            <button onclick='drawtable()'>시간표그리기</button>
-
-            <table class='timetable' id='timetableid'>
-                <caption>▶ 강의 시간표 ◀</caption>
-
+        <div class="container">
+            <div class='side-bar'></div>
+            <table class="blueTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>과목코드</th>
+                        <th>과목명</th>
+                        <th>교수명</th>
+                        <th>강의요일</th>
+                        <th>강의시간</th>
+                        <th>신청</th>
+                        <th>삭제</th>
+                    </tr>
+                </thead>
+                <tbody id="wishlist">
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" name="color" value="blue"></label>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <button onclick="enroll_button">신청</button>
+                        </td>
+                        <td>
+                            <button onclick="wishlist_delete">삭제</button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
-
         </div>
+        <div class='content-area'></div>
     </div>
+
+
+
+
 </body>
 
 </html>
