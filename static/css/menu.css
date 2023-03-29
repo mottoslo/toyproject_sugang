@@ -11,8 +11,18 @@
     width: auto;
 }
 
-.bar-and-content {
-    background-clip: 10;
+
+.bar-and-content{
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: left;
+}
+
+.content-area{
+    /* background-color: brown; */
+    width: 100%;
+
 }
 
 
