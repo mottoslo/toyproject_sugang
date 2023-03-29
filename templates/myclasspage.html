@@ -20,7 +20,76 @@
         enroll_list();
     });
     //user_id 얻기
-    let user_id = "aaa";
+    let user_id = "jaehyung1";
+
+    function drawtable(class_list) {
+
+        let num_hrs = 10;
+        $('#timetableid').append(
+            `<tr>
+                    <th></th>
+                    <th style = 'background-color: red;'>월</th>
+                    <th>화</th>
+                    <th>수</th>
+                    <th>목</th>
+                    <th>금</th>
+                    <th>토</th>
+                </tr>`
+        )
+        for (var i = 1; i < num_hrs + 1; i++) {
+            $('#timetableid').append(
+                `<tr>
+                    <th rowspan = '4'>${i + 8}</th>
+                    <th id = 'p${i}1'>${i}1</th>
+                    <th id = 'p${i + 10}1'>${i + 10}1</th>
+                    <th id = 'p${i + 20}1'>${i + 20}1</th>
+                    <th id = 'p${i + 30}1'>${i + 30}1</th>
+                    <th id = 'p${i + 40}1'>${i + 40}1</th>
+                    <th id = 'p${i + 50}1'>${i + 50}1</th>
+                </tr>`
+            )
+
+
+            for (var j = 2; j < 5; j++) {
+                $('#timetableid').append(
+                    `<tr>
+                    <th id = 'p${i}${j}'>${i}${j}</td>
+                    <th id = 'p${i + 10}${j}'>${i + 10}${j}</th>
+                    <th id = 'p${i + 20}${j}'>${i + 20}${j}</th>
+                    <th id = 'p${i + 30}${j}'>${i + 30}${j}</th>
+                    <th id = 'p${i + 40}${j}'>${i + 40}${j}</th>
+                    <th id = 'p${i + 50}${j}'>${i + 50}${j}</th>
+                </tr>`
+                )
+            }
+        }
+
+        let formData = new FormData();
+        formData.append('code_list_len', class_list.length)
+        for (var i = 0; i < class_list.length; i++) {
+            formData.append(`code_list${i}`, class_list[i])
+        }
+        fetch('api/get_table_position', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
+            let draw_info = data['result']
+            draw_info.forEach((elem) => {
+                positions = elem['class_pos']
+                color = elem['class_color']
+
+                positions.forEach((onetime_pos) => {
+                    onetime_pos.forEach((pos) => {
+                        $(`#p${pos}`).css('background-color', color)
+                    })
+                })
+
+            })
+        })
+
+        // temp_poslist.forEach((elem) => {
+        //     $(`#p${elem}`).css('background-color', 'green')
+        // })
+    }
+    let code_list = []
+    
     function enroll_list() {
         let formData = new FormData();
         // user_id 넘기기
@@ -29,15 +98,17 @@
             .then((res) => res.json())
             .then((data) => {
                 let rows = data["result"];
+                code_list = data["code_list"]
                 $("#myclass").empty();
                 rows.forEach((a) => {
+                    
                     // 변수에 app.py에서 받아온 값 삽입
                     let class_code = a["class_code"];
                     let class_name = a["class_name"];
                     let instructor = a["instructor"];
-                    let class_day = a["class_time"]["day"];
-                    let class_stime = a["class_time"]["start_time"];
-                    let class_etime = a["class_time"]["end_time"];
+                    let class_day = a["class_time"][0]["day"];
+                    let class_stime = a["class_time"][0]["start_time"];
+                    let class_etime = a["class_time"][0]["end_time"];
                     let class_max = a["class_max"];
                     let class_now = a["class_now"];
 
@@ -67,7 +138,7 @@
         if (cnt === 0) {
             alert("선택된 강의가 없습니다.");
         } else {
-            console.log(chklist);
+            
 
             let formData = new FormData();
             // user_id, chklist 넘기기
@@ -95,7 +166,10 @@
             <li><a href="#">신청내역</a></li>
         </div>
         <div class="content-area">
-            <div class="timetable">시간표 영역</div>
+                <button onclick='drawtable(code_list)'>시간표그리기</button>
+                <table class='timetable' id='timetableid'>
+                    <caption>▶ 강의 시간표 ◀</caption>
+                </table>
             <h2>내 신청내역</h2>
             <table class="enroll_list">
                 <thead>
@@ -108,36 +182,7 @@
                     <th>현재/최대</th>
                 </thead>
                 <tbody id="myclass">
-                    <!-- <tr>
-                <td><input type="checkbox"></td>
-                <td>CC101</td>
-                <td><a href="#">웹개발종합반</a></td>
-                <td>이범규 튜터</td>
-                <td>Mon</td>
-                <td>09:00-10:30</td>
-                <td>127/300</td>
-                <td><button>수강취소</button></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>RC101</td>
-                <td><a href="#">자바스크립트 문법뽀개기</a></td>
-                <td>김신록 튜터</td>
-                <td>Fri</td>
-                <td>15:30-17:00</td>
-                <td>15/100</td>
-                <td><button>수강취소</button></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>RC101</td>
-                <td><a href="#">웹퍼블리싱 정복반</a></td>
-                <td>임흥선 튜터</td>
-                <td>Wed</td>
-                <td>15:30-17:00</td>
-                <td>88/150</td>
-                <td><button>수강취소</button></td>
-            </tr> -->
+
                 </tbody>
             </table>
             <div class="btn">

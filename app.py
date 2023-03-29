@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://sparta:test@cluster0.mqf1zqw.mongodb.net/?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://sparta:test@cluster0.nxpuz9m.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
 
 
@@ -56,7 +56,7 @@ def register_api():
         'user_pw' : pw_receive,        
     }
     db.user_list.insert_one(doc)
-    print(doc)
+    # print(doc)
     return jsonify({'msg':'가입이 완료되었습니다.'})
 
 
@@ -66,10 +66,15 @@ def login_api():
     id_receive = request.form['user_id_give']
     pw_receive = request.form['user_pw_give']
 
-    user = db.user_list.find_one({'user_id':id_receive},{'_id':False}) 
+    user = db.user_list.find_one({'user_id':id_receive},{'_id':False})
+    # print(user)
+    # print('====')
+
+    # print(f'입력한 pw 타입 : {type(pw_receive)}')
+    # print(f'db의 pw 타입: {type(user["user_pw"])}')
 
     user['user_pw'] == pw_receive
-    print(user['user_pw'] == pw_receive)
+    # print(user['user_pw'] == pw_receive)
     if user['user_pw'] == pw_receive : 
         return jsonify({'result' : 1}) 
     else : 
@@ -91,7 +96,7 @@ def get_searchlist_api():
                 {'class_code':{'$regex':keyword}},
                 {'instructor':{'$regex':keyword}}]},
                 {'_id':False}))
-    print(searchdb)
+    # print(searchdb)
     return jsonify({'keyword': searchdb})
 
 @app.route("/api/wish_button", methods = ['POST'])
@@ -100,7 +105,7 @@ def wish_button_api():
     wish_class = request.form['wishlist']
     # db.user_info.insert_one({'wishlist' : [wish_class]})
     db.user_info.update_one(
-        {'user_id':'르탄이'},
+        {'user_id':'jaehyung1'},
         {'$push':{'wishlist': wish_class}}
     )
     return jsonify({'msg' : 'user_id에 class_code 넣었슴다~'})
@@ -120,9 +125,9 @@ def post_wishlist_api():
 
     for w in wishlist :
         class_info = db.class_list.find_one({'class_code':w},{'_id':False})
-        print("-----------", class_info)
+        # print("-----------", class_info)
         class_info_list.append(class_info)
-        print("+++++++++++", class_info_list)
+        # print("+++++++++++", class_info_list)
     return jsonify({'result': class_info_list, 'code_list' : wishlist})
 
 @app.route("/api/enroll_button", methods=["POST"])
@@ -160,26 +165,29 @@ def wishlist_delete_api():
 
     return jsonify({'msg' : '삭제되었습니다.'})
 
-@app.route("/api/enroll_list", methods=["GET"])
+@app.route("/api/enroll_list", methods=["POST"])
 def get_enroll_list_api():
     #신청내역페이지
     # user_id 받아오기
     id_receive = request.form['user_id']
     # user_id로 user_data 받아오기
-    user_data = list(db.user_info.find({'user_id':id_receive}))
-    print(user_data)
+    user_data = list(db.user_info.find({'user_id':id_receive},{'_id' : False}))
+    #print(user_data)
     class_info_list = []
     # 신청내역리스트 추출
-    enrollment=user_data[0]['enrollment']
-    print(enrollment)
+    enrollment = user_data[0]['enrollment']
+    # print(enrollment)
     # 신청내역리스트에서 과목코드 추출
+    # print(e)
     for e in enrollment:
         # 추출한 과목코드로 강의정보 받아오기
         class_info = db.class_list.find_one({'class_code': e}, {'_id':False})
-        print("-----------", class_info)
+        
+        #print("-----------", class_info)
         # 강의정보리스트에 강의정보 넣기
         class_info_list.append(class_info)
-        print("+++++++++++", class_info_list)
+        
+        #print("+++++++++++", class_info_list)
     return jsonify({'result' : class_info_list, 'code_list' : enrollment})
 
 @app.route("/api/enroll_delete", methods=["POST"])
@@ -188,8 +196,8 @@ def delete_enroll_api():
     #신청내역삭제요청
     user_id = request.form['user_id']
     chklist = request.form['chklist']
-    print(user_id)
-    print(chklist)
+    # print(user_id)
+    # print(chklist)
 
     return jsonify({'msg' : '필요한 데이터 담기'})
     
@@ -206,8 +214,8 @@ def get_table_position():
         }
         draw_info.append(dic)
     
-    # print(draw_info)
+    print(draw_info)
     return jsonify({'result' : draw_info})
 
 if __name__ == '__main__':
-   app.run('0.0.0.0', port=5001, debug=True)
+   app.run('0.0.0.0', port=5000, debug=True)
