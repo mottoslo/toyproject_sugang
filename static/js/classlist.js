@@ -85,11 +85,12 @@ function show_comment() {
 
 
 function shoppingBasket(class_code){
-    // alert('장바구니 연결')
+
     let formData = new FormData();
     formData.append("wishlist", class_code);
+    // console.log(class_code)
 
-    fetch('/wish_button', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+    fetch('/api/wish_button', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
       alert(data["msg"]);
       console.log(data)
       

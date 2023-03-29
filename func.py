@@ -1,4 +1,4 @@
-day_dict = {'월' : 0, '화' : 1, '수' : 2, '목' : 3, '금' : 4}
+day_dict = {'월' : 0, '화' : 1, '수' : 2, '목' : 3, '금' : 4, '토' : 5}
 
 def position_tolist(start_pos, end_pos):  # 312, 323
     num_between = range(start_pos, end_pos)

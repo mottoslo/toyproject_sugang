@@ -138,23 +138,23 @@
 
         let formData = new FormData();
         formData.append('code_list_len', class_list.length)
-        for (var i = 0; i < class_list.length; i++){
+        for (var i = 0; i < class_list.length; i++) {
             formData.append(`code_list${i}`, class_list[i])
         }
         fetch('api/get_table_position', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
-                let draw_info = data['result']
-                draw_info.forEach((elem) =>{
-                    positions = elem['class_pos']
-                    color = elem['class_color']
+            let draw_info = data['result']
+            draw_info.forEach((elem) => {
+                positions = elem['class_pos']
+                color = elem['class_color']
 
-                    positions.forEach((onetime_pos) =>{
-                        onetime_pos.forEach((pos) =>{
-                            $(`#p${pos}`).css('background-color', color)
-                        })
+                positions.forEach((onetime_pos) => {
+                    onetime_pos.forEach((pos) => {
+                        $(`#p${pos}`).css('background-color', color)
                     })
-
                 })
+
             })
+        })
 
         // temp_poslist.forEach((elem) => {
         //     $(`#p${elem}`).css('background-color', 'green')
@@ -171,7 +171,7 @@
     })
 
     function show_wishlist() {
-        let user_id = "abcd"
+        let user_id = "jaehyung1"
         let formData = new FormData();
         formData.append("user_id", user_id)
 
@@ -180,14 +180,17 @@
             // console.log(data['result'])
             $('#wishlist').empty()
             rows.forEach((a) => {
+
                 let class_code = a['class_code']
                 let class_name = a['class_name']
                 let instructor = a['instructor']
-                let class_day = a['class_time']['day']
-                let class_stime = a['class_time']['start_time']
-                let class_etime = a['class_time']['end_time']
+                let class_day = a['class_time'][0]['day']
+                let class_stime = a['class_time'][0]['start_time']
+                let class_etime = a['class_time'][0]['end_time']
+                console.log(class_stime)
 
                 let class_time = class_stime.substr(0, 2) + ":" + class_stime.substr(2, 2) + "-" + class_etime.substr(0, 2) + ":" + class_etime.substr(2, 2)
+                // let class_time = `${class_stime} - ${class_etime}`
 
 
                 let temp_html =
@@ -258,6 +261,15 @@
     <div class='bar-and-content'>
         <div class="container">
             <div class='side-bar'></div>
+        </div>
+        <div class='content-area'>
+
+            <button onclick='drawtable()'>시간표그리기</button>
+            <table class='timetable' id='timetableid'>
+                <caption>▶ 강의 시간표 ◀</caption>
+
+            </table>
+
             <table class="blueTable">
                 <thead>
                     <tr>
@@ -291,7 +303,6 @@
                 </tbody>
             </table>
         </div>
-        <div class='content-area'></div>
     </div>
 
 
