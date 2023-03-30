@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Document</title>
-    <link rel="stylesheet" href="../static/css/menu.css">
+    <link rel="stylesheet" href="../static/css/sidebar.css">
+    <link rel="stylesheet" href="../static/css/clock.css">
     <link rel="stylesheet" href="../static/css/timetable.css">
     <script src="../static/js/auth.js"></script>
 
@@ -188,8 +189,17 @@
 
     let login_session = auth()
     let user_id = login_session['user_id']
-    
-    
+
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
 
     function show_wishlist() {
         let formData = new FormData();
@@ -265,14 +275,22 @@
 
 <body>
     <!-- 내 장바구니 보여주고, 삭제, 신청버튼, 시간표들어갈 공간 남겨두기 -->
-    <div class='logo-home'></div>
-    <div class='info-bar'></div>
-    <div class='bar-and-content'>
-        <div class="container">
-            <div class='side-bar'></div>
-            
+
+    <div class='container'>
+
+        <div id="mySidebar" class="sidebar">
+            <div class="clock">
+                <div id="date" class="date"></div>
+                <div id="time" class="time"></div>
+            </div>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">로그아웃</a>
+            <a href="/classes">수강신청</a>
+            <a href="/wishlist">장바구니</a>
+            <a href="/myclass">타임테이블</a>
         </div>
-        <div class='content-area'>
+        <div id="main">
+            <button class="openbtn" onclick="openNav()">Menu</button>
 
 
             <button id='drawbutton' type='button' onclick='drawtable()'>시간표그리기</button>
@@ -316,6 +334,8 @@
             </table>
         </div>
     </div>
+    <script src="../static/js/sidebar.js"></script>
+    <script src="../static/js/clock.js"></script>
 </body>
 
 </html>
