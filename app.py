@@ -83,12 +83,18 @@ def register_api():
         if db.user_list.find_one({'user_id' : id_receive},{'_id' : False}) is not None:
             return {'result' : 'fail', 'msg' : '이미 존재하는 ID입니다 !'}
         else:
-            doc = {
+            doc_userlist = {
             'user_name' : name_receive,
             'user_id' : id_receive,
             'user_pw' : pw_hash
             }
-            db.user_list.insert_one(doc)
+            doc_user_info = {
+                'user_id' : id_receive,
+                'wishlist' : [],
+                'enrollment' : []
+            }
+            db.user_list.insert_one(doc_userlist)
+            db.user_info.insert_one(doc_user_info)
 
             return jsonify({'result' : 'success'})
 
@@ -96,10 +102,12 @@ def register_api():
 
 @app.route("/api/login", methods = ['POST']) #POST로 데이터 담거나, GET으로 파라미터 쿼리 날리기
 def login_api():
+
     id_receive = request.form['id_give']
     pw_receive = request.form['pw_give']
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+
 
     user = db.user_list.find_one({'user_id':id_receive,'user_pw':pw_hash})
     print(user)
@@ -137,9 +145,10 @@ def get_searchlist_api():
 def wish_button_api():
     #희망과목 담기 요청
     wish_class = request.form['wishlist']
+    user_id = request.form['user_id']
     # db.user_info.insert_one({'wishlist' : [wish_class]})
     db.user_info.update_one(
-        {'user_id':'jaehyung1'},
+        {'user_id': user_id},
         {'$push':{'wishlist': wish_class}}
     )
     return jsonify({'msg' : 'user_id에 class_code 넣었슴다~'})

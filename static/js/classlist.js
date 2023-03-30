@@ -5,6 +5,7 @@ $(document).ready(function () {
     show_comment()
     hideClassComment()
     search()
+    
 });
 
 
@@ -35,14 +36,14 @@ function search(keyword) {
                 let class_etime = a['class_time'][0]['end_time']
                 
                 let class_time = class_stime.substr(0, 2) + ":" + class_stime.substr(2, 2) + "-" + class_etime.substr(0, 2) + ":" + class_etime.substr(2, 2)
-
+                
                 let temp_html = `<tr>
                                     <td>${class_code}</td>
                                     <td>${class_name}</td>
                                     <td>${instructor}</td>
                                     <td>${class_day}</td>
                                     <td>${class_time}</td>
-                                    <td><button type="button" onclick="shoppingBasket('${class_code}')" class="showBtn">장바구니담기</button></td>
+                                    <td><button type="button" onclick="shoppingBasket('${class_code}','${user_id}')" class="showBtn">장바구니담기</button></td>
                                 </tr>`
                 $('#column').append(temp_html)
             })
@@ -73,7 +74,7 @@ function show_comment() {
                                     <td>${instructor}</td>
                                     <td>${class_day}</td>
                                     <td>${class_time}</td>
-                                    <td><button type="button" onclick="shoppingBasket('${class_code}')" class="showBtn">장바구니담기</button></td>
+                                    <td><button type="button" onclick="shoppingBasket('${class_code}','${user_id}')" class="showBtn">장바구니담기</button></td>
                             </tr>`
             $('#column').append(temp_html)
         })
@@ -84,10 +85,11 @@ function show_comment() {
 
 
 
-function shoppingBasket(class_code){
-
+function shoppingBasket(class_code, user_id){
     let formData = new FormData();
     formData.append("wishlist", class_code);
+    formData.append('user_id', user_id)
+
     // console.log(class_code)
 
     fetch('/api/wish_button', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
