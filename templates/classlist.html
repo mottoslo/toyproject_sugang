@@ -122,8 +122,6 @@
 
         fetch('/api/wish_button', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
             alert(data["msg"]);
-            console.log(data)
-
         })
     }
 
