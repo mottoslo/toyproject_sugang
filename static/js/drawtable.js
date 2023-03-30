@@ -1,5 +1,9 @@
 function drawtable(class_list) {
     let num_hrs = 10;
+    $('#timetableid').css('opacity', 1);
+    $('#timetableid').css('width', '1000px');
+    $('#timetableid').css('height', '800px');
+    
     $('#timetableid').append(
         `<tr>
                 <th class = 'timeth'></th>
