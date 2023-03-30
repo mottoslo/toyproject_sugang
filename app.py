@@ -89,9 +89,9 @@ def register_api():
 def login_api():
     id_receive = request.form['#user_id_give']
     pw_receive = request.form['#user_pw_give']
-
+    
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
-    print(id_receive,pw_receive)
+    # print(id_receive,pw_receive)
 
     user = db.user_list.find_one({'user_id':id_receive,'user_pw':pw_hash})
 
