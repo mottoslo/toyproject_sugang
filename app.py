@@ -151,7 +151,7 @@ def wish_button_api():
         {'user_id': user_id},
         {'$push':{'wishlist': wish_class}}
     )
-    return jsonify({'msg' : 'user_id에 class_code 넣었슴다~'})
+    return jsonify({'msg' : '관심과목에 추가 되었습니다.'})
 
 
 # //////////
