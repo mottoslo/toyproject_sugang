@@ -8,28 +8,32 @@
     <link rel="stylesheet" href="../static/css/login.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="../static/css/login.css">
     <title>로그인 페이지</title>
 
     <script>
         function login() {
-            let user_id = $('#user_id').val()
-            let user_pw = $('#user_pw').val()
 
-            let formData = new FormData();
-            formData.append("user_id_give", user_id);
-            formData.append("user_pw_give", user_pw);
+            $.ajax({
+                    type: "POST",
+                    url: "/api/login",
+                    data: {id_give: $('#user_id').val(), pw_give: $('#user_pw').val()},
+                    success: function (response) {
+                        if (response['result'] == 'success') {
 
-            fetch('/api/login', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
-                if (data['result'] == 1) {
-                    alert('성공')
-                    window.location.href = '/classes'
-                }
-                else {
-                    alert('실패')
-                    window.location.reload()
-                }
-            });
-        }
+                            $.cookie('user_token', response['token']);
+                            console.log(response['token'])
+
+                            alert('로그인 완료!')
+                            window.location.href = '/classes'
+                            to
+                        } else {
+                            // 로그인이 안되면 에러메시지를 띄웁니다.
+                            alert(response['msg'])
+                        }
+                    }
+                })
+            }
     </script>
 </head>
 
@@ -44,8 +48,10 @@
                 <input id="user_pw" class="login_text" type="password" name="id" placeholder="비밀번호" required>
 
                 <div>
-                    <button onclick="login()" id="LOGIN_BTN" class="login_btn" type="button">로그인</button>
-                    <a class="login_bottom" href="/register">회원가입</a>
+
+                    <button onclick="login()" id="login_btn" class="login_btn" type="button">로그인</button>
+                    <a class="login_bottom" href="register">회원가입</a>
+
                 </div>
             </div>
         </div>

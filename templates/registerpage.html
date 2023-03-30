@@ -6,27 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/register.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    
+
     <title>회원가입</title>
 </head>
 <script>
+
     function register() {
-        let user_name = $('#user_name').val()
-        let user_id = $('#user_id').val()
-        let user_pw = $('#user_pw').val()
-        let re_pw = $('#re_pw').val()
+        $.ajax({
+            type: "POST",
+            url: "/api/registerpage",
+            data: {
+                user_id_give: $('#user_id').val(),
+                user_pw_give: $('#user_pw').val(),
+                user_name_give: $('#user_name').val(),
+                re_pw_give: $('#re_pw').val()
+            },
+            success: function (response) {
+                if (response['result'] == 'success') {
+                    alert('회원가입이 완료되었습니다.')
+                    window.location.href = '/'
+                } else {
+                    alert(response['msg'])
+                }
+            }
+        })
+        // let user_name = $('#user_name').val()
+        // let user_id = $('#user_id').val()
+        // let user_pw = $('#user_pw').val()
+        // let re_pw = $('#re_pw').val()
 
-        let formData = new FormData();
-        formData.append("user_name_give", user_name);
-        formData.append("user_id_give", user_id);
-        formData.append("user_pw_give", user_pw);
-        formData.append("re_pw_give", re_pw)
+        // let formData = new FormData();
+        // formData.append("user_name_give", user_name);
+        // formData.append("user_id_give", user_id);
+        // formData.append("user_pw_give", user_pw);
+        // formData.append("re_pw_give", re_pw)
 
 
-        fetch('/api/registerpage', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
-            // console.log(user_name,user_id,user_pw,re_pw)
-            alert(data["msg"])
-            window.location.href = '/'
-        });
+        // fetch('/api/registerpage', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
+        //     // console.log(user_name,user_id,user_pw,re_pw)
+        //     alert(data["msg"])
+        //     window.location.href = '/'
+        // });
+
     }
 
 </script>
