@@ -1,8 +1,9 @@
 .timetable{
-    width : 1000px;
-    height : 800px;
+    width :  0;
+    height : 0;
     border-collapse: collapse;
     border : 1px solid;
+    opacity: 0;
 }
 
 .timetable > tr{

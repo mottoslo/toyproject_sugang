@@ -8,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
     <title>Document</title>
     <link rel="stylesheet" href="../static/css/sidebar.css">
     <link rel="stylesheet" href="../static/css/clock.css">
@@ -17,6 +18,7 @@
 
 </head>
 <style type="text/css">
+
     td,
     th {
         text-align: center;
@@ -141,21 +143,25 @@
             </div>
             <li id = 'hellomessage'></li>
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
             <a href="/" onclick="alert('로그아웃')">로그아웃</a>
-            <a href="/classes">수강신청</a>
-            <a href="/wishlist">장바구니</a>
-            <a href="/myclass">타임테이블</a>
+            <a href="/classes">강의목록</a>
+            <a href="/wishlist">관심과목</a>
+            <a href="/myclass">신청내역</a>
         </div>
         
         <div id="main">
             <button class="openbtn" onclick="openNav()">Menu</button>
 
-            <button id='drawbutton' type='button' onclick='drawtable(code_list)'>시간표그리기</button>
+
+
+            <button id='drawbutton' type='button' onclick='drawtable(code_list)' class="btn btn-outline-dark">시간표그리기</button>
+
 
             <table class='timetable' id='timetableid'>
                 <caption>▶ 강의 시간표 ◀</caption>
             </table>
-            <table class="blueTable table table-hover">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -180,11 +186,11 @@
                         <td></td>
                         <td>
 
-                            <button onclick="enroll_button()" type="button">신청</button>
+                            <button onclick="enroll_button()" type="button" class="showBtn btn btn-dark">신청</button>
 
                         </td>
                         <td>
-                            <button onclick="wishlist_delete" type="button">삭제</button>
+                            <button onclick="wishlist_delete()" type="button" class="btn btn-danger">삭제</button>
                         </td>
                     </tr>
                 </tbody>
