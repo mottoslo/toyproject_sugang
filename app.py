@@ -145,9 +145,10 @@ def get_searchlist_api():
 def wish_button_api():
     #희망과목 담기 요청
     wish_class = request.form['wishlist']
+    user_id = request.form['user_id']
     # db.user_info.insert_one({'wishlist' : [wish_class]})
     db.user_info.update_one(
-        {'user_id':'jaehyung1'},
+        {'user_id': user_id},
         {'$push':{'wishlist': wish_class}}
     )
     return jsonify({'msg' : 'user_id에 class_code 넣었슴다~'})
