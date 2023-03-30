@@ -12,7 +12,7 @@ function auth() {
 
             } else {
                 alert(response['msg']) 
-                window.location.href = '/login'
+                window.location.href = '/'
             }
         
         }
