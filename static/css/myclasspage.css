@@ -5,7 +5,6 @@
 }
 
 .btn{
-    background-color: yellow;
     display: flex;
     flex-direction: row-reverse;
     align-items: center;

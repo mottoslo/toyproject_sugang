@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://sparta:test@cluster0.nxpuz9m.mongodb.net/?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://sparta:test@cluster0.bohxmsb.mongodb.net/?retryWrites=true&w=majority')
+# mongodb+srv://sparta:<password>@cluster0.bohxmsb.mongodb.net/?retryWrites=true&w=majority
 db = client.dbsparta
 
 
@@ -172,7 +173,7 @@ def get_enroll_list_api():
     id_receive = request.form['user_id']
     # user_id로 user_data 받아오기
     user_data = list(db.user_info.find({'user_id':id_receive},{'_id' : False}))
-    #print(user_data)
+    # print(user_data)
     class_info_list = []
     # 신청내역리스트 추출
     enrollment = user_data[0]['enrollment']
@@ -183,23 +184,31 @@ def get_enroll_list_api():
         # 추출한 과목코드로 강의정보 받아오기
         class_info = db.class_list.find_one({'class_code': e}, {'_id':False})
         
-        #print("-----------", class_info)
+        # print("-----------", class_info)
         # 강의정보리스트에 강의정보 넣기
         class_info_list.append(class_info)
         
-        #print("+++++++++++", class_info_list)
+        # print("+++++++++++", class_info_list)
     return jsonify({'result' : class_info_list, 'code_list' : enrollment})
 
 @app.route("/api/enroll_delete", methods=["POST"])
 def delete_enroll_api():
 
-    #신청내역삭제요청
+    # 신청내역삭제요청
+    # 데이터 받아오기
     user_id = request.form['user_id']
     chklist = request.form['chklist']
-    # print(user_id)
-    # print(chklist)
-
-    return jsonify({'msg' : '필요한 데이터 담기'})
+    # ,로 자르기
+    delcode = chklist.split(',')
+    
+    user_data = list(db.user_info.find({'user_id':user_id},{'_id' : False}))
+    enrollment = user_data[0]['enrollment']
+    # 새로 넣을 배열 생성(배열 빼기 연산)
+    new_arr = list(set(enrollment)-set(delcode))
+    # print(new_arr)
+    db.user_info.update_one({'user_id':user_id},{'$set':{'enrollment': new_arr}})
+    
+    return jsonify({'msg' : '취소 되었습니다.'})
     
 @app.route("/api/get_table_position", methods=["POST"])
 def get_table_position():

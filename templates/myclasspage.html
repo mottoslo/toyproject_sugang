@@ -20,7 +20,8 @@
         enroll_list();
     });
     //user_id 얻기
-    let user_id = "jaehyung1";
+    // let user_id = "jaehyung1";
+    let user_id = "aaa"
 
     function drawtable(class_list) {
 
@@ -106,9 +107,12 @@
                     let class_code = a["class_code"];
                     let class_name = a["class_name"];
                     let instructor = a["instructor"];
-                    let class_day = a["class_time"][0]["day"];
-                    let class_stime = a["class_time"][0]["start_time"];
-                    let class_etime = a["class_time"][0]["end_time"];
+                    let class_day = a["class_time"]["day"];
+                    let class_stime = a["class_time"]["start_time"];
+                    let class_etime = a["class_time"]["end_time"];
+                    // let class_day = a["class_time"][0]["day"];
+                    // let class_stime = a["class_time"][0]["start_time"];
+                    // let class_etime = a["class_time"][0]["end_time"];
                     let class_max = a["class_max"];
                     let class_now = a["class_now"];
 
@@ -147,14 +151,14 @@
             fetch("/api/enroll_delete", { method: "POST", body: formData })
                 .then((res) => res.json())
                 .then((data) => {
-                    alert("취소 되었습니다.")
+                    alert(data["msg"])
                     window.location.reload()
                 });
         }
     }
 </script>
 <body>
-    <!-- 내 신청내역 보여주고, 삭제, 신청버튼, 시간표들어갈 공간 남겨두기 -->
+    <!-- 내 신청내역 보여주고, 삭제버튼, 시간표들어갈 공간 남겨두기 -->
 
     <div class="logo-home"></div>
     <div class="info-bar"></div>
@@ -186,8 +190,7 @@
                 </tbody>
             </table>
             <div class="btn">
-                <!-- <button id="addbtn">데이터삽입</button> -->
-                <button id="ccbtn" onclick="class_cancel()" type="button">수강취소</button>
+                <button type="button" onclick="class_cancel()" class="btn btn-danger">수강 취소</button>
             </div>
 
         </div>
