@@ -1,5 +1,5 @@
-.contaner{
-    height: 300px;
+.contaner1{
+    height: 500px;
     overflow: auto;
 }
 
@@ -27,50 +27,7 @@ tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-
-
-.available {
-    color: green;
-    font-weight: bold;
-}
-
-.closed {
-    color: red;
-    font-weight: bold;
-}
-
-  /* ---------------------------- */
-  .commentContainer {
-    display: flex;
-    display: hidden;
-    border: 1px solid black;
-    margin: 20px;
-  }
   
-  .comment {
-    width: 50%;
-    height: 500px;
-    border: 1px solid black;
-  }
-  
-  .right {
-    width: 50%;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid black;
-
-
-  }
-  
-  .top {
-    height: 50%;
-  }
-  
-  .bottom {
-    height: 50%;
-  }
-
-  .d-flex{
+.d-flex{
     margin: 10px;
-  }
+}
