@@ -83,12 +83,18 @@ def register_api():
         if db.user_list.find_one({'user_id' : id_receive},{'_id' : False}) is not None:
             return {'result' : 'fail', 'msg' : '이미 존재하는 ID입니다 !'}
         else:
-            doc = {
+            doc_userlist = {
             'user_name' : name_receive,
             'user_id' : id_receive,
             'user_pw' : pw_hash
             }
-            db.user_list.insert_one(doc)
+            doc_user_info = {
+                'user_id' : id_receive,
+                'wishlist' : [],
+                'enrollment' : []
+            }
+            db.user_list.insert_one(doc_userlist)
+            db.user_info.insert_one(doc_user_info)
 
             return jsonify({'result' : 'success'})
 
