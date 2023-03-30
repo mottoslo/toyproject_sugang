@@ -144,9 +144,7 @@ def enroll_button_api():
         {'user_id': user_id},
         {'$push':{'enrollment': enrollcode}}
     )
-    # if doc == doc :
-    #     return jsonify({'msg': '중복입니다.'})
-    # else :
+
     return jsonify({'msg': '신청되었습니다.'})
 
 @app.route("/api/wishlist_delete", methods=["POST"])
