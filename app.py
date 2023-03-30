@@ -96,10 +96,12 @@ def register_api():
 
 @app.route("/api/login", methods = ['POST']) #POST로 데이터 담거나, GET으로 파라미터 쿼리 날리기
 def login_api():
+
     id_receive = request.form['id_give']
     pw_receive = request.form['pw_give']
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+
 
     user = db.user_list.find_one({'user_id':id_receive,'user_pw':pw_hash})
     print(user)
