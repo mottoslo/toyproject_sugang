@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../static/css/classlist.css">
-    <link rel="stylesheet" href="../static/css/menu.css">
+    <link rel="stylesheet" href="../static/css/sidebar.css">
+    <link rel="stylesheet" href="../static/css/clock.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -16,62 +17,83 @@
         crossorigin="anonymous"></script>
 
 </head>
-<body>
-    <!-- 강의목록 받아와서 표시해주고, 클릭하면 간단설명, 담기버튼 만들기  -->
-    <div class='logo-home'></div>
-    <div class='info-bar'></div>
-    <div class='bar-and-content'>
-        <div class='side-bar'></div>
-        <div class='content-area'>
-            <form class="d-flex" role="search">
-                <input id="searchForm"class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
-            </form>
-            <div class="contaner">
-                <table id="class_table">
-                    <thead>
-                        <tr>
-                            <th>과목코드</th>
-                            <th>과목명</th>
-                            <th>교수명</th>
-                            <th>강의요일</th>
-                            <th>강의시간</th>
-                            <th>수강신청</th>
-                        </tr>
-                    </thead>
-                    <tbody id="column">
-                        <!-- <tr>
-                            <td>CS101</td>
-                            <td>JavaScript 문법 뽀개기</td>
-                            <td>홍길동</td>
-                            <td>월요일</td>
-                            <td>14:00-15:30</td>
-                            <td><button id="showBtn">장바구니</button></td>
-                        </tr>         -->
-                    </tbody>
-                </table>
-            </div>
+<script>
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
 
-            <div id="hideContainer" class="commentContainer">
-                <div class="comment">
-                    <h1>강의이름 넣어주세용</h1>
-                    <p>강의 코멘트가 들어갈 자리입니다. 강의의 대한 상세설명, 요일, 커리큘럼 이런거 대충 넣을게요</p>
-                </div>
-                <div class="right">
-                    <div class="top">
-                        <h1>강사의 이름.</h1>
-                        <img src="data:image/jpeg;base64,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" alt="강사사진" width="180px", height="180px">
-                    </div>
-                    <div class="bottom">
-                        <button type="button">수강신청</button>
-                    </div>
+    /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+</script>
+<!-- 
+    기본배치
+   div class = container : 사이드바가 표시되는 화면
+   div class = container collapse: 사이드바가 숨겨지는 화면
+    -->
+
+<body>
+    <!-- 메인영역     -->
+    <div class="container">
+
+        <div id="mySidebar" class="sidebar">
+            <div class="clock">
+                <div id="date" class="date"></div>
+                <div id="time" class="time"></div>
+            </div>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">로그아웃</a>
+            <a href="#">수강신청</a>
+            <a href="#">장바구니</a>
+            <a href="#">타임테이블</a>
+        </div>
+
+        <div id="main">
+            <button class="openbtn" onclick="openNav()">Menu</button>
+
+            <div class='contents'>
+                <form class="d-flex" role="search">
+                    <input id="searchForm" class="form-control me-2" type="search" placeholder="Search"
+                        aria-label="Search">
+                    <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                </form>
+                <div class="contaner1">
+                    <table id="class_table">
+                        <thead>
+                            <tr>
+                                <th>과목코드</th>
+                                <th>과목명</th>
+                                <th>교수명</th>
+                                <th>강의요일</th>
+                                <th>강의시간</th>
+                                <th>수강신청</th>
+                            </tr>
+                        </thead>
+                        <tbody id="column">
+                            <!-- <tr>
+                                <td>CS101</td>
+                                <td>JavaScript 문법 뽀개기</td>
+                                <td>홍길동</td>
+                                <td>월요일</td>
+                                <td>14:00-15:30</td>
+                                <td><button id="showBtn">장바구니</button></td>
+                            </tr>         -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
+
     </div>
 
 
     <script src="../static/js/classlist.js"></script>
+    <script src="../static/js/sidebar.js"></script>
+    <script src="../static/js/clock.js"></script>
 </body>
 
 </html>
