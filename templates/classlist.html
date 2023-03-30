@@ -99,7 +99,7 @@
                                 <td>${instructor}</td>
                                 <td>${class_day}</td>
                                 <td>${class_time}</td>
-                                <td><button type="button" onclick="shoppingBasket('${class_code}','${user_id}')" class="showBtn">장바구니담기</button></td>
+                                <td><button type="button" onclick="shoppingBasket('${class_code}','${user_id}')" class="showBtn btn btn-dark">장바구니담기</button></td>
                         </tr>`
                 $('#column').append(temp_html)
             })
@@ -149,9 +149,9 @@
             </div>
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="#">로그아웃</a>
-            <a href="/classes">수강신청</a>
-            <a href="/wishlist">장바구니</a>
-            <a href="/myclass">타임테이블</a>
+            <a href="/classes">강의목록</a>
+            <a href="/wishlist">관심과목</a>
+            <a href="/myclass">신청내역</a>
         </div>
 
         <div id="main">
@@ -164,7 +164,7 @@
                     <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
                 </form>
                 <div class="contaner1">
-                    <table id="class_table">
+                    <table id="class_table" class="table table-hover">
                         <thead>
                             <tr>
                                 <th>과목코드</th>
