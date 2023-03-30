@@ -20,8 +20,8 @@
         enroll_list();
     });
     //user_id 얻기
-    // let user_id = "jaehyung1";
-    let user_id = "aaa"
+    let user_id = "jaehyung1";
+    // let user_id = "aaa"
 
     function drawtable(class_list) {
 
@@ -107,12 +107,12 @@
                     let class_code = a["class_code"];
                     let class_name = a["class_name"];
                     let instructor = a["instructor"];
-                    let class_day = a["class_time"]["day"];
-                    let class_stime = a["class_time"]["start_time"];
-                    let class_etime = a["class_time"]["end_time"];
-                    // let class_day = a["class_time"][0]["day"];
-                    // let class_stime = a["class_time"][0]["start_time"];
-                    // let class_etime = a["class_time"][0]["end_time"];
+                    // let class_day = a["class_time"]["day"];
+                    // let class_stime = a["class_time"]["start_time"];
+                    // let class_etime = a["class_time"]["end_time"];
+                    let class_day = a["class_time"][0]["day"];
+                    let class_stime = a["class_time"][0]["start_time"];
+                    let class_etime = a["class_time"][0]["end_time"];
                     let class_max = a["class_max"];
                     let class_now = a["class_now"];
 
