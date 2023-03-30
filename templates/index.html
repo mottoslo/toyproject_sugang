@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/login.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <title>로그인 페이지</title>
@@ -19,11 +20,11 @@
             formData.append("user_pw_give", user_pw);
 
             fetch('/api/login', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
-                if (data['result']== 1){
+                if (data['result'] == 1) {
                     alert('성공')
-                    window.location.href = '/classes'        
+                    window.location.href = '/classes'
                 }
-                else{
+                else {
                     alert('실패')
                     window.location.reload()
                 }
@@ -34,18 +35,21 @@
 
 <body>
     <!-- 로그인페이지 만들고, 로그인 성공 시 classlist페이지로 넘겨주기 -->
-    <h1>로그인페이지</h1>
-        <div>
-            <label for="user_id">ID</label>
-            <input type="text" id="user_id">
-            <p></p>
-            <label for="user_pw">PW</label>
-            <input type="password" id="user_pw" autocomplete="off" required>
+    <article>
+        <div class="login_wrapper">
+
+            <div class="login_logo">항해99</div>
+            <div>
+                <input id="user_id" class="login_text" type="text" name="id" placeholder="아이디">
+                <input id="user_pw" class="login_text" type="password" name="id" placeholder="비밀번호" required>
+
+                <div>
+                    <button onclick="login()" id="LOGIN_BTN" class="login_btn" type="button">로그인</button>
+                    <a class="login_bottom" href="/register">회원가입</a>
+                </div>
+            </div>
         </div>
-        <div>
-            <button onclick="login()" type="button" class="btn btn-dark">Login</button>
-            <a href='register'>회원가입하기</a>
-        </div>
+    </article>
 </body>
 
 </html>

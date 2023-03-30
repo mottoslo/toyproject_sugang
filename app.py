@@ -2,8 +2,12 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://sparta:test@cluster0.nxpuz9m.mongodb.net/?retryWrites=true&w=majority')
-# mongodb+srv://sparta:<password>@cluster0.bohxmsb.mongodb.net/?retryWrites=true&w=majority
+
+import certifi
+
+ca = certifi.where()
+
+client = MongoClient('mongodb+srv://sparta:test@cluster0.nxpuz9m.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.dbsparta
 
 
@@ -134,22 +138,13 @@ def post_wishlist_api():
 @app.route("/api/enroll_button", methods=["POST"])
 def enroll_button_api():
     #수강신청 요청
-    class_code_receive = request.form['class_code_give']
-    class_name_receive = request.form['class_name_give']
-    instructor_receive = request.form['instructor_give']
-    class_day_receive = request.form['class_day_give']
-    class_time_receive = request.form['class_time_give']
-    
-    doc = {
-        'class_code' : class_code_receive,
-        'class_name' : class_name_receive,
-        'instructor' : instructor_receive,
-        'class_day' : class_day_receive,
-        'class_time' : class_time_receive
-    }
-
-    db.enrolllist.insert_one(doc)
-
+    enrollcode = request.form['enrollment']
+    user_id = request.form['user_id']
+     
+    db.user_info.update_one(
+        {'user_id': user_id},
+        {'$push':{'enrollment': enrollcode}}
+    )
     # if doc == doc :
     #     return jsonify({'msg': '중복입니다.'})
     # else :
@@ -159,10 +154,13 @@ def enroll_button_api():
 def wishlist_delete_api():
 
     # 희망과목 삭제버튼
-    user_id_receive = request.form['user_id_give']
     class_code_receive = request.form['code_give']
-   
-    db.wishlist.delete_one({'user_id' : user_id_receive , 'code' : class_code_receive})
+    user_id = request.form['user_id']
+
+    db.user_info.update_one(
+        {'user_id': user_id},
+        {'$pull':{'wishlist': class_code_receive}}
+    )
 
     return jsonify({'msg' : '삭제되었습니다.'})
 
@@ -227,4 +225,4 @@ def get_table_position():
     return jsonify({'result' : draw_info})
 
 if __name__ == '__main__':
-   app.run('0.0.0.0', port=5000, debug=True)
+   app.run('0.0.0.0', port=5001, debug=True)
