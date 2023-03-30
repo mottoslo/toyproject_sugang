@@ -2,7 +2,12 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://sparta:test@cluster0.nxpuz9m.mongodb.net/?retryWrites=true&w=majority')
+
+import certifi
+
+ca = certifi.where()
+
+client = MongoClient('mongodb+srv://sparta:test@cluster0.nxpuz9m.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.dbsparta
 
 
@@ -133,22 +138,13 @@ def post_wishlist_api():
 @app.route("/api/enroll_button", methods=["POST"])
 def enroll_button_api():
     #수강신청 요청
-    class_code_receive = request.form['class_code_give']
-    class_name_receive = request.form['class_name_give']
-    instructor_receive = request.form['instructor_give']
-    class_day_receive = request.form['class_day_give']
-    class_time_receive = request.form['class_time_give']
-    
-    doc = {
-        'class_code' : class_code_receive,
-        'class_name' : class_name_receive,
-        'instructor' : instructor_receive,
-        'class_day' : class_day_receive,
-        'class_time' : class_time_receive
-    }
-
-    db.enrolllist.insert_one(doc)
-
+    enrollcode = request.form['enrollment']
+    user_id = request.form['user_id']
+     
+    db.user_info.update_one(
+        {'user_id': user_id},
+        {'$push':{'enrollment': enrollcode}}
+    )
     # if doc == doc :
     #     return jsonify({'msg': '중복입니다.'})
     # else :
@@ -158,10 +154,13 @@ def enroll_button_api():
 def wishlist_delete_api():
 
     # 희망과목 삭제버튼
-    user_id_receive = request.form['user_id_give']
     class_code_receive = request.form['code_give']
-   
-    db.wishlist.delete_one({'user_id' : user_id_receive , 'code' : class_code_receive})
+    user_id = request.form['user_id']
+
+    db.user_info.update_one(
+        {'user_id': user_id},
+        {'$pull':{'wishlist': class_code_receive}}
+    )
 
     return jsonify({'msg' : '삭제되었습니다.'})
 
@@ -172,7 +171,7 @@ def get_enroll_list_api():
     id_receive = request.form['user_id']
     # user_id로 user_data 받아오기
     user_data = list(db.user_info.find({'user_id':id_receive},{'_id' : False}))
-    #print(user_data)
+    # print(user_data)
     class_info_list = []
     # 신청내역리스트 추출
     enrollment = user_data[0]['enrollment']
@@ -183,23 +182,31 @@ def get_enroll_list_api():
         # 추출한 과목코드로 강의정보 받아오기
         class_info = db.class_list.find_one({'class_code': e}, {'_id':False})
         
-        #print("-----------", class_info)
+        # print("-----------", class_info)
         # 강의정보리스트에 강의정보 넣기
         class_info_list.append(class_info)
         
-        #print("+++++++++++", class_info_list)
+        # print("+++++++++++", class_info_list)
     return jsonify({'result' : class_info_list, 'code_list' : enrollment})
 
 @app.route("/api/enroll_delete", methods=["POST"])
 def delete_enroll_api():
 
-    #신청내역삭제요청
+    # 신청내역삭제요청
+    # 데이터 받아오기
     user_id = request.form['user_id']
     chklist = request.form['chklist']
-    # print(user_id)
-    # print(chklist)
-
-    return jsonify({'msg' : '필요한 데이터 담기'})
+    # ,로 자르기
+    delcode = chklist.split(',')
+    
+    user_data = list(db.user_info.find({'user_id':user_id},{'_id' : False}))
+    enrollment = user_data[0]['enrollment']
+    # 새로 넣을 배열 생성(배열 빼기 연산)
+    new_arr = list(set(enrollment)-set(delcode))
+    # print(new_arr)
+    db.user_info.update_one({'user_id':user_id},{'$set':{'enrollment': new_arr}})
+    
+    return jsonify({'msg' : '취소 되었습니다.'})
     
 @app.route("/api/get_table_position", methods=["POST"])
 def get_table_position():
@@ -218,4 +225,4 @@ def get_table_position():
     return jsonify({'result' : draw_info})
 
 if __name__ == '__main__':
-   app.run('0.0.0.0', port=5000, debug=True)
+   app.run('0.0.0.0', port=5001, debug=True)

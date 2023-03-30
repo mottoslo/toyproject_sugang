@@ -18,7 +18,7 @@
         width: 100%;
         text-align: left;
         border-collapse: collapse;
-        margin-top: 500px
+        margin-top: 0px
     }
 
 
@@ -178,13 +178,14 @@
 
 
 <script>
+    let user_id = "jaehyung1"
+
     $(document).ready(function () {
         // 로그인 세션 확인  // 신청강의 리스트 
         show_wishlist()
     })
 
     function show_wishlist() {
-        let user_id = "jaehyung1"
         let formData = new FormData();
         formData.append("user_id", user_id)
 
@@ -217,10 +218,10 @@
                             <td>${class_day}</td>
                             <td>${class_time}</td>
                             <td>
-                                <button onclick="enroll_button(${class_code})">신청</button>
+                                <button onclick="enroll_button('${class_code}')">신청</button>
                             </td>
                         <td>
-                            <button onclick="wishlist_delete">삭제</button>
+                            <button onclick="wishlist_delete('${class_code}')">삭제</button>
                         </td>
                     </tr>`
                 $('#wishlist').append(temp_html)
@@ -230,35 +231,25 @@
 
 
     function enroll_button(class_code) {
-        // let class_code = $('#class_code').val()
-        // let class_name = $('#class_name').val()
-        // let instructor = $('#instructor').val()
-        // let class_day = $('#class_day').val()
-        // let class_time = $('#class_time').val()
-
 
         let formData = new FormData();
-        // formData.append("class_code_give", class_code);
-        // formData.append("class_name_give", class_name);
-        // formData.append("instructor_give", instructor);
-        // formData.append("class_day_give", class_day);
-        // formData.append("class_time_give", class_time);
 
+
+        formData.append("enrollment", class_code)
+        formData.append("user_id", user_id)
+   
         fetch('/api/enroll_button', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
             alert(data["msg"]);
-            console.log(date)
-            window.location.reload()
+           
         });
     }
 
-    function wishlist_delete(user_id, class_code) {
+    function wishlist_delete(class_code) {
         let formData = new FormData();
-        formData.append("code_give", class_code);
-        formData.append("name_give", class_name);
-        formData.append("instructor_give", instructor);
-        formData.append("day_give", class_day);
-        formData.append("class_time_give", class_time);
 
+        formData.append("code_give", class_code);
+        formData.append("user_id", user_id)
+               
         fetch('/api/wishlist_delete', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
             alert(data["msg"]);
             window.location.reload()
@@ -277,12 +268,12 @@
         </div>
         <div class='content-area'>
 
+
             <button id = 'drawbutton' type = 'button' onclick='drawtable()'>시간표그리기</button>
+
             <table class='timetable' id='timetableid'>
                 <caption>▶ 강의 시간표 ◀</caption>
-
             </table>
-
             <table class="blueTable">
                 <thead>
                     <tr>
@@ -307,20 +298,17 @@
                         <td></td>
                         <td></td>
                         <td>
-                            <button onclick="enroll_button()">신청</button>
+
+                            <button onclick="enroll_button()" type="button">신청</button>
+
                         </td>
                         <td>
-                            <button onclick="wishlist_delete">삭제</button>
+                            <button onclick="wishlist_delete" type="button">삭제</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
-
-
-
 </body>
-
 </html>
