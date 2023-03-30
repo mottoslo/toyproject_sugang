@@ -12,44 +12,27 @@
 
     <script>
         function login() {
-            // $.ajax({
-            //         type: "POST",
-            //         url: "/api/login",
-            //         data: {id_give: $('#user_id').val(), pw_give: $('#user_pw').val()},
-            //         success: function (response) {
-            //             if (response['result'] == 'success') {
-            //                 // 로그인이 정상적으로 되면, 토큰을 받아옵니다.
-            //                 // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
-            //                 $.cookie('user_token', response['token']);
+            $.ajax({
+                    type: "POST",
+                    url: "/api/login",
+                    data: {id_give: $('#user_id').val(), pw_give: $('#user_pw').val()},
+                    success: function (response) {
+                        if (response['result'] == 'success') {
 
-            //                 alert('로그인 완료!')
-            //                 window.location.href = '/'
-            //             } else {
-            //                 // 로그인이 안되면 에러메시지를 띄웁니다.
-            //                 alert(response['msg'])
-            //             }
-            //         }
-            //     })
-            let user_id = $('#user_id').val()
-            let user_pw = $('#user_pw').val()
+                            $.cookie('user_token', response['token']);
+                            console.log(response['token'])
 
-                let formData = new FormData();
-                formData.append("user_id_give", user_id);
-                formData.append("user_pw_give", user_pw);
-
-                fetch('/api/login', { method: "POST", body: formData }).then((response) => response.json()).then((data) => {
-                    if (data['result'] == 1) {
-                        // console.log(data)
-                        alert('즐거운 항해되세요')
-                        window.location.href = '/classes'
+                            alert('로그인 완료!')
+                            window.location.href = '/classes'
+                            to
+                        } else {
+                            // 로그인이 안되면 에러메시지를 띄웁니다.
+                            alert(response['msg'])
+                        }
                     }
-                    else {
-                        alert('ID/PW를 확인해주세요.')
-                        window.location.reload()
-                    }
-                });
-        }
-    </script>
+                })
+            }
+   </script>
 </head>
 
 <body>

@@ -1,21 +1,19 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
-app = Flask(__name__)
-
 from pymongo import MongoClient
-
-
 import certifi
 
+
+app = Flask(__name__)
 ca = certifi.where()
 
 client = MongoClient('mongodb+srv://sparta:test@cluster0.nxpuz9m.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
-
 db = client.dbsparta
 
 
 from func import *
 import random
 import certifi
+#jwt 설치는 pip install PyJWT  로 해야함
 import jwt #JWT토큰
 import hashlib
 import datetime
@@ -77,65 +75,47 @@ def register_api():
     id_receive = request.form['user_id_give']
     pw_receive = request.form['user_pw_give']
     re_pw_receive = request.form['re_pw_give']
+    if pw_receive != re_pw_receive:
+        return {'result' : 'fail', 'msg' : '비밀번호 확인 오류!'}
+    else:
+        pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
-    pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()  
+        if db.user_list.find_one({'user_id' : id_receive},{'_id' : False}) is not None:
+            return {'result' : 'fail', 'msg' : '이미 존재하는 ID입니다 !'}
+        else:
+            doc = {
+            'user_name' : name_receive,
+            'user_id' : id_receive,
+            'user_pw' : pw_hash
+            }
+            db.user_list.insert_one(doc)
 
-    doc = {
-        'user_name' : name_receive,
-        'user_id' : id_receive,
-        'user_pw' : pw_hash,
-        're_pw_give':re_pw_receive
-    }
-    db.user_list.insert_one(doc)
-
-    return jsonify({'msg':'항해를 시작하시겠습니까?'})
+            return jsonify({'result' : 'success'})
 
 
 
 @app.route("/api/login", methods = ['POST']) #POST로 데이터 담거나, GET으로 파라미터 쿼리 날리기
 def login_api():
-    id_receive = request.form['#user_id_give']
-    pw_receive = request.form['#user_pw_give']
-    
+
+    id_receive = request.form['id_give']
+    pw_receive = request.form['pw_give']
+
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
-    # print(id_receive,pw_receive)
+
 
     user = db.user_list.find_one({'user_id':id_receive,'user_pw':pw_hash})
-
+    print(user)
     if user is  not None :
         
         payload = {
-            "user_id": id_receive,
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=100)
+            "user_id": user['user_id'],
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=600)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")  # byte-string
         print(payload)
         return jsonify({'result' : 'success', 'token':token})
     else : 
-        return jsonify({'result' : 'fail','msg':'ID/PW가 일치하지 않습니다.'})
-    
-    #로그인 요청
-
-    # print('====')
-
-    # print(f'입력한 pw 타입 : {type(pw_receive)}')
-    # print(f'db의 pw 타입: {type(user["user_pw"])}')
-
-@app.route('/api/nick', methods=['GET'])
-def api_valid():
-    token_receive = request.cookies.get('user_token')
-    try:
-        # token을 시크릿키로 디코딩합니다.
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
-        print(payload)
-        userinfo = db.user_list.find_one({'user_id': payload['user_id']}, {'_id': 0})
-        return jsonify({'result': 'success', 'user_pw': userinfo['pw_hash']})
-    except jwt.ExpiredSignatureError:
-        # 위를 실행했는데 만료시간이 지났으면 에러가 납니다.
-        return jsonify({'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'})
-    except jwt.exceptions.DecodeError:
-        # 로그인 정보가 없으면 에러가 납니다!
-        return jsonify({'result': 'fail', 'msg': '로그인 정보가 존재하지 않습니다.'})
+        return jsonify({'result' : 'fail','msg':'ID 혹은 PW가 일치하지 않습니다.'})
 
 @app.route("/api/classlist", methods = ['GET'])
 def get_classlist_api():
@@ -196,9 +176,7 @@ def enroll_button_api():
         {'user_id': user_id},
         {'$push':{'enrollment': enrollcode}}
     )
-    # if doc == doc :
-    #     return jsonify({'msg': '중복입니다.'})
-    # else :
+
     return jsonify({'msg': '신청되었습니다.'})
 
 @app.route("/api/wishlist_delete", methods=["POST"])
@@ -275,5 +253,20 @@ def get_table_position():
     print(draw_info)
     return jsonify({'result' : draw_info})
 
+@app.route('/api/isAuth', methods=['GET'])
+def api_valid():
+    token_receive = request.cookies.get('user_token')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        userinfo = db.user_list.find_one({'user_id': payload['user_id']}, {'_id': 0})
+
+        return jsonify({'result': 'success', 'user_info': userinfo})
+    except jwt.ExpiredSignatureError:
+        # 위를 실행했는데 만료시간이 지났으면 에러가 납니다.
+        return jsonify({'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'})
+    except jwt.exceptions.DecodeError:
+        # 로그인 정보가 없으면 에러가 납니다!
+        return jsonify({'result': 'fail', 'msg': '로그인 정보가 존재하지 않습니다.'})
+
 if __name__ == '__main__':
-   app.run('0.0.0.0', port=5001, debug=True)
+   app.run('0.0.0.0', port=5000, debug=True)

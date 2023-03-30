@@ -9,6 +9,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../static/css/menu.css">
     <link rel="stylesheet" href="../static/css/timetable.css">
+    <script src="../static/js/auth.js"></script>
 
 </head>
 <style type="text/css">
@@ -91,6 +92,7 @@
 </style>
 
 <script>
+
     // class_list : wishlist페이지에서는 wishlist [과목코드들], 신청내역페이지에서는 enrollment [과목코드들]
     function drawtable() {
         let class_list = ['STAT420']
@@ -161,13 +163,13 @@
         //     $(`#p${elem}`).css('background-color', 'green')
         // })
     }
-    function deletetable(){
+    function deletetable() {
         $('#timetableid').hide()
         let btn = document.querySelector('#drawbutton')
         btn.setAttribute('onClick', 'showtable()')
         btn.textContent = '시간표 그리기'
     }
-    function showtable(){
+    function showtable() {
         $('#timetableid').show()
         let btn = document.querySelector('#drawbutton')
         btn.setAttribute('onClick', 'deletetable()')
@@ -178,12 +180,16 @@
 
 
 <script>
-    let user_id = "jaehyung1"
 
     $(document).ready(function () {
         // 로그인 세션 확인  // 신청강의 리스트 
         show_wishlist()
     })
+
+    let login_session = auth()
+    let user_id = login_session['user_id']
+    
+    
 
     function show_wishlist() {
         let formData = new FormData();
@@ -201,7 +207,6 @@
                 let class_day = a['class_time'][0]['day']
                 let class_stime = a['class_time'][0]['start_time']
                 let class_etime = a['class_time'][0]['end_time']
-                console.log(class_stime)
 
                 let class_time = class_stime.substr(0, 2) + ":" + class_stime.substr(2, 2) + "-" + class_etime.substr(0, 2) + ":" + class_etime.substr(2, 2)
                 // let class_time = `${class_stime} - ${class_etime}`
@@ -237,10 +242,10 @@
 
         formData.append("enrollment", class_code)
         formData.append("user_id", user_id)
-   
+
         fetch('/api/enroll_button', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
             alert(data["msg"]);
-           
+
         });
     }
 
@@ -249,7 +254,7 @@
 
         formData.append("code_give", class_code);
         formData.append("user_id", user_id)
-               
+
         fetch('/api/wishlist_delete', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
             alert(data["msg"]);
             window.location.reload()
@@ -265,11 +270,12 @@
     <div class='bar-and-content'>
         <div class="container">
             <div class='side-bar'></div>
+            
         </div>
         <div class='content-area'>
 
 
-            <button id = 'drawbutton' type = 'button' onclick='drawtable()'>시간표그리기</button>
+            <button id='drawbutton' type='button' onclick='drawtable()'>시간표그리기</button>
 
             <table class='timetable' id='timetableid'>
                 <caption>▶ 강의 시간표 ◀</caption>
@@ -311,4 +317,5 @@
         </div>
     </div>
 </body>
+
 </html>
