@@ -27,18 +27,6 @@
 <script>
 
     // class_list : wishlist페이지에서는 wishlist [과목코드들], 신청내역페이지에서는 enrollment [과목코드들]
-    function deletetable() {
-        $('#timetableid').hide()
-        let btn = document.querySelector('#drawbutton')
-        btn.setAttribute('onClick', 'showtable()')
-        btn.textContent = '시간표 그리기'
-    }
-    function showtable() {
-        $('#timetableid').show()
-        let btn = document.querySelector('#drawbutton')
-        btn.setAttribute('onClick', 'deletetable()')
-        btn.textContent = '시간표 지우기'
-    }
 
 </script>
 
@@ -49,10 +37,13 @@
     $(document).ready(function () {
         // 로그인 세션 확인  // 신청강의 리스트 
         show_wishlist()
+        $('#hellomessage').css('color', 'white')
+        $('#hellomessage').append(`    ${user_info['user_name']}님 환영합니다 !`)
+        $('#hellomessage').css('align', 'center')
     })
 
-    let login_session = auth()
-    let user_id = login_session['user_id']
+    let user_info = auth()
+    let user_id = user_info['user_id']
 
     function openNav() {
         document.getElementById("mySidebar").style.width = "250px";
@@ -148,6 +139,7 @@
                 <div id="date" class="date"></div>
                 <div id="time" class="time"></div>
             </div>
+            <li id = 'hellomessage'></li>
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="/" onclick="alert('로그아웃')">로그아웃</a>
             <a href="/classes">수강신청</a>

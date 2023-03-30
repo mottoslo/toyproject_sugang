@@ -66,3 +66,16 @@ function drawtable(class_list) {
     //     $(`#p${elem}`).css('background-color', 'green')
     // })
 }
+
+function deletetable() {
+    $('#timetableid').hide()
+    let btn = document.querySelector('#drawbutton')
+    btn.setAttribute('onClick', 'showtable()')
+    btn.textContent = '시간표 그리기'
+}
+function showtable() {
+    $('#timetableid').show()
+    let btn = document.querySelector('#drawbutton')
+    btn.setAttribute('onClick', 'deletetable()')
+    btn.textContent = '시간표 지우기'
+}

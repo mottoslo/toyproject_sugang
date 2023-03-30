@@ -30,6 +30,9 @@
         show_comment()
         hideClassComment()
         search()
+        $('#hellomessage').css('color', 'white')
+        $('#hellomessage').append(`    ${user_info['user_name']}님 환영합니다 !`)
+        $('#hellomessage').css('align', 'center')
 
     });
 
@@ -147,6 +150,7 @@
                 <div id="date" class="date"></div>
                 <div id="time" class="time"></div>
             </div>
+            <li id = 'hellomessage'></li>
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="/" onclick="alert('로그아웃')">로그아웃</a>
             <a href="/classes">수강신청</a>
