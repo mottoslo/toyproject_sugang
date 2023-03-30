@@ -13,10 +13,11 @@
         crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet" />
     <title>Document</title>
-    <link rel="stylesheet" href="../static/css/menu.css" />
+    <link rel="stylesheet" href="../static/css/sidebar.css" />
+    <link rel="stylesheet" href="../static/css/clock.css" />
     <link rel="stylesheet" href="../static/css/myclasspage.css" />
     <script src="../static/js/auth.js"></script>
-    
+
 </head>
 <script>
 
@@ -26,7 +27,18 @@
     //user_id 얻기
     let login_session = auth()
     let user_id = login_session['user_id']
-    
+
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+
 
     function drawtable(class_list) {
 
@@ -165,43 +177,53 @@
 
 <body>
     <!-- 내 신청내역 보여주고, 삭제버튼, 시간표들어갈 공간 남겨두기 -->
+    <div class="container">
 
-    <div class="logo-home"></div>
-    <div class="info-bar"></div>
-    <div class="bar-and-content">
-        <div class="side-bar">
-            
-            <li><a href="#">수강신청 안내</a></li>
-            <li><a href="#">강의목록</a></li>
-            <li><a href="#">수강희망과목</a></li>
-            <li><a href="#">신청내역</a></li>
-        </div>
-        <div class="content-area">
-            <button onclick='drawtable(code_list)'>시간표그리기</button>
-            <table class='timetable' id='timetableid'>
-                <caption>▶ 강의 시간표 ◀</caption>
-            </table>
-            <h2>내 신청내역</h2>
-            <table class="enroll_list table table-hover">
-                <thead>
-                    <th>체크</th>
-                    <th>과목코드</th>
-                    <th>수업명</th>
-                    <th>강사명</th>
-                    <th>강의요일</th>
-                    <th>강의시간</th>
-                    <th>현재/최대</th>
-                </thead>
-                <tbody id="myclass">
 
-                </tbody>
-            </table>
-            <div class="btn">
-                <button type="button" onclick="class_cancel()" class="btn btn-danger">수강 취소</button>
+        <div id="mySidebar" class="sidebar">
+            <div class="clock">
+                <div id="date" class="date"></div>
+                <div id="time" class="time"></div>
             </div>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">로그아웃</a>
+            <a href="#">수강신청</a>
+            <a href="#">장바구니</a>
+            <a href="#">타임테이블</a>
+        </div>
 
+        <div id="main">
+            <button class="openbtn" onclick="openNav()">Menu</button>
+
+            <div class="content-area">
+                <button onclick='drawtable(code_list)'>시간표그리기</button>
+                <table class='timetable' id='timetableid'>
+                    <caption>▶ 강의 시간표 ◀</caption>
+                </table>
+                <h2>내 신청내역</h2>
+                <table class="enroll_list table table-hover">
+                    <thead>
+                        <th>체크</th>
+                        <th>과목코드</th>
+                        <th>수업명</th>
+                        <th>강사명</th>
+                        <th>강의요일</th>
+                        <th>강의시간</th>
+                        <th>현재/최대</th>
+                    </thead>
+                    <tbody id="myclass">
+
+                    </tbody>
+                </table>
+                <div class="btn">
+                    <button type="button" onclick="class_cancel()" class="btn btn-danger">수강 취소</button>
+                </div>
+
+            </div>
         </div>
     </div>
+    <script src="../static/js/sidebar.js"></script>
+    <script src="../static/js/clock.js"></script>
 </body>
 
 </html>
