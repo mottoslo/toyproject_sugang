@@ -110,7 +110,7 @@ def login_api():
 
 
     user = db.user_list.find_one({'user_id':id_receive,'user_pw':pw_hash})
-    print(user)
+    
     if user is  not None :
         
         payload = {
@@ -118,7 +118,7 @@ def login_api():
             "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=600)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")  # byte-string
-        print(payload)
+        
         return jsonify({'result' : 'success', 'token':token})
     else : 
         return jsonify({'result' : 'fail','msg':'ID 혹은 PW가 일치하지 않습니다.'})
@@ -151,7 +151,11 @@ def wish_button_api():
         {'user_id': user_id},
         {'$push':{'wishlist': wish_class}}
     )
+<<<<<<< HEAD
     return jsonify({'msg' : '관심과목에 추가 되었습니다.'})
+=======
+    return jsonify({'msg' : f'{user_id}님의 장바구니에 {wish_class}를 담았습니다'})
+>>>>>>> 6082260760a58791dd47ddfda4012483d75ee002
 
 
 # //////////
@@ -257,7 +261,7 @@ def get_table_position():
         }
         draw_info.append(dic)
     
-    print(draw_info)
+    
     return jsonify({'result' : draw_info})
 
 @app.route('/api/isAuth', methods=['GET'])

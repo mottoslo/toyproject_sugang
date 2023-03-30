@@ -122,13 +122,12 @@
 
         fetch('/api/wish_button', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
             alert(data["msg"]);
-            console.log(data)
-
         })
     }
 
 
 
+    
     function openNav() {
         document.getElementById("mySidebar").style.width = "250px";
         document.getElementById("main").style.marginLeft = "250px";
