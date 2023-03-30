@@ -1,18 +1,25 @@
 .timetable{
-    width : 800px;
+    width : 1000px;
     height : 800px;
-    color: #121212;
-    border : #121212;
+    border-collapse: collapse;
+    border : 1px solid;
+}
+
+.timetable > tr{
+    border : 1px dotted black;
+    
 }
 
 
-.timetable > td.style{
-    width : 16.6%;
-    background-color: blue;
+.timetd{
+    /* width : 16.6%; */
+    border : 1px dotted black;
+    align-items: center;
 }
 
-.timetable > th{
-    width : 16.6%;
+.timeth{
+    /* width : 16.6%; */
+    border : 1px solid;
 }
 
 
