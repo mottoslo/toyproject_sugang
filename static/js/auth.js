@@ -4,6 +4,7 @@ function auth() {
         type: "GET",
         url: "/api/isAuth",
         data: {},
+        async: false,
         success: function (response) {
             if (response['result'] == 'success') {
                 // 로그인한 사용자면 닉네임을 보여주는 알람을 띄움!
