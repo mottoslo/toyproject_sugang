@@ -1,13 +1,13 @@
-<aside>
-💡 온보딩 11조 프로젝트 수강신청 사이트입니다. 로그인, 회원가입 기능, 강의목록 표시 및 검색, 관심과목 등록 및 삭제, 수강신청 및 신청목록 삭제, 시간표 그리기 등 기능이 있습니다.
-</aside>
-<br><br>
+## 💡 우리 프로젝트는요! <br>
+수강신청 사이트입니다. 로그인, 회원가입 기능, 강의목록 표시 및 검색, 관심과목 등록 및 삭제, 수강신청 및 신청목록 삭제, 시간표 그리기 등 기능이 있습니다.
+<br><br><br>
 
 ## 🗓프로젝트 기간
-
-2023년 03월 27일 (월) 15:00 ~ 2023년 03월 30일 (목) 09:00
-발표 2023년 03월 30일 (목) 09:00 ~ 09:10
-<br><br>
+<b>총 기간 :</b> 2023.03.27 (월) 15:00 ~ 2023.03.30 (목) 21:00 <br><br>
+<b>기획 및 설계 :</b> 2023.03.27 (월) 15:00 ~ 2023.03.28 (화) 새벽 <br>
+<b>제작 :</b> 2023.03.28 (화) 새벽 ~ 2023.03.30 (목) 21:00 <br>
+<b>발표 :</b> 2023.03.30 (목) 21:00 ~ 21:10
+<br><br><br>
 
 ## 👪팀원
 모두가 얼떨결에 Full-stack 개발
@@ -15,26 +15,30 @@
 - `강재형` - 시간표 로직 구현, JWT토큰
 - `김석호` - 회원가입, 로그인, JWT토큰
 - `김효환` - 강의목록, 검색기능, 사이드바, JWT토큰
-- `신민철` - 관심과목, JWT토큰
+- `신민철` - 관심강의, JWT토큰
 - `왕정민` - 신청내역, JWT토큰
-<br><br>
+<br><br><br>
 
 ## 🛠기술스택 & 툴
-SKILL
+<b>[ SKILL ]</b>
 <br>
 <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"> <img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=CSS&logoColor=white"> <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jQuery&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"> <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=HTML&logoColor=white"> <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white"> <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=Flask&logoColor=white">
 
-TOOL
+<b>[ TOOL ]</b>
 <br>
 <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white"> <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white"> <img src="https://img.shields.io/badge/Sourcetree-0052CC?style=for-the-badge&logo=Sourcetree&logoColor=white"> <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white"> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white">
-<br><br>
+<br><br><br>
 
 ## ✏초안 API명세
-우리 초기버전 사진 넣기
+
+![wireframe_1stdraft](https://user-images.githubusercontent.com/36254544/229122453-dd38515d-230f-4c1c-9e07-a9eb702b1091.png)
+![api_info_1stdraft](https://user-images.githubusercontent.com/36254544/229122545-b2d0e067-c953-459d-bcd3-5404d3323158.PNG)
+
 <br><br>
 
 ## 📑API 명세
-이미지 첨부
+![이미지 15](https://user-images.githubusercontent.com/36254544/229122767-9e811b2d-7e3a-4e79-88c8-daabbfd31c5d.png)
+
 <br><br>
 
 ## 📈데이터 명세
@@ -72,7 +76,7 @@ db.class_list = {'class_name' : '수업 이름',
 
                           'class_now' : '현재신청인원'}
 ```
-
+<br>
 
 ## 📌API 구현 기능
 - 회원가입 기능
@@ -80,9 +84,9 @@ db.class_list = {'class_name' : '수업 이름',
 - 로그인 인증 기능
 - 강의목록 호출 기능
 - 강의목록 검색 기능
-- 관심과목 담기 기능
-- 관심과목 호출 기능
-- 관심과목 삭제 기능
+- 관심강의 담기 기능
+- 관심강의 호출 기능
+- 관심강의 삭제 기능
 - 수강신청 기능
 - 신청내역 호출 기능
 - 신청내역 삭제 기능
@@ -92,7 +96,7 @@ db.class_list = {'class_name' : '수업 이름',
 ## 💡트러블슈팅
 `강재형`
 - [x]  ~~ormData의 body에 리스트를 태울 수 없는 문제 발생~~
-<br>→반복문으로 해결
+<br>→ 반복문으로 해결
 - [x]  ~~myclasspage에서 표 작게나오는 문제~~
 <br>→
 - [x]  ~~시간표 한번 더 누르면 hide~~
@@ -112,7 +116,7 @@ db.class_list = {'class_name' : '수업 이름',
 
 `김효환`
 - [x]  ~~user_id와 class_list db들간의 연결 → $push 로 해결~~
-<br>→$push로 해결
+<br>→ $push로 해결
 - [ ]  class_list 속성 추가
 - [ ]  사이드바추가 (현재 classes 에만 들어가있음) static에 css,js sidebar 인포트 필요
 - [ ]  사이드바에 시계 추가완료  사이드바 인포트 하면서 clock js,css 도 인포트 필요
@@ -121,36 +125,53 @@ db.class_list = {'class_name' : '수업 이름',
 
 `신민철`
 - [x]  ~~신청 및 삭제 버튼이 작동하지 않음~~
-<br>→temp_html에 ${class_code}로 해결
-<br>→’${class_code}’의 ‘’로 문자를 string로 해결
+<br>→ temp_html에 ${class_code}로 해결
+<br>→ ’${class_code}’의 ‘’로 문자를 string로 해결
 - [ ]  체크박스를 체크해서 신청 및 삭제
 - [ ]  신청리스트 중복체크
 
 `왕정민`
-- [x]  ~~myclasspage에서 표 작게 나오는거 해결
-<br>→
-- [x]  ~~체크박스 체크해서 여러개 삭제하는 기능~~
-<br>→
+- [x] ~~enrollment 리스트에서 과목코드를 추출하여 해당 과목의 상세정보를 class_list 컬렉션에서 가져오기~~
+<br>→ enrollment가 리스트여서 받아와서 한꺼풀 벗기고 for문을 돌려 해결!
+- [x]  ~~myclasspage에서 표 작게 나오는 부분 해결하기~~
+<br>→ 관심강의 페이지와 신청과목 페이지의 마크업 구조가 달라서 이 부분을 맞춰줌 (추후 수정)
+- [x]  ~~체크박스를 이용하여 여러 개를 한꺼번에 삭제하는 기능 만들기~~
+<br>→ 버튼의 name 속성을 같은 이름으로 해야 함 
+<br>→ 체크 된 체크박스의 id를 가져와서 each() 메서드를 이용해 리스트에 push()하여 넘김
+<br>→ 체크 된 체크박스의 수를 카운트하여 체크하지 않은 상황에 대한 예외 처리를 함
+<br>→ <app.py>에서 받은 내용이 리스트가 아니여서 쉽표(,)로 split 하고, 다시 리스트로 만듬
+<br>→ user id로 가져온 원래 리스트와 체크 된 리스트 연산(리스트 빼기 연산 가능!)으로 새 리스트를 생성하여 DB를 수정함
+<br>→ 참고할 것은 mongoDB update를 할 때 항목에 리스트로 들어있으면 리스트가 그 안으로 들어가는게 아닐까? 생각했는데 아님 ㅋ_ㅋ
+<br>→ ['a', 'b', 'c', ...] 가 ['a', 'b', 'c', [new arr], ...] 이렇게 될까 했는데 그렇지 않고, 잘 수정됨
+<br>→ 오라클과 달리 mongoDB는 리스트가 데이터로 삽입될 수 있음. 그렇기 때문에 enrollment의 가장 작은 단위가 리스트임.
+<br>→ 리스트 안의 내용까지 접근 못하는 것과 마찬가지로 리스트가 그 안으로 삽입되는 것이 아니라 리스트 자체가 잘 수정되었음
 - [x]  ~~표 css~~
-<br>→
+<br>→ 부트스트랩을 이용해 테이블을 심플하게 디자인 함
 - [ ]  사이드바 토글
-<br>→
+<br>→ 추후 수정 예정
 <br>
 
 ## ✨결과물
 
-<로그인>
+#### <회원가입>
+![이미지 14](https://user-images.githubusercontent.com/36254544/229124821-b8408409-c2fb-4bc1-aa11-0670c89c415d.png)
+<br>
+#### <로그인>
 ![이미지 001](https://user-images.githubusercontent.com/36254544/229111205-0d93b11b-174c-44d3-b3c2-e2e653963f0b.png)
-<br><강의목록 조회>
+<br>
+#### <강의목록 조회>
 ![이미지 002](https://user-images.githubusercontent.com/36254544/229111211-740e2f02-4e79-4986-b58b-485f347a0b54.png)
-<br><강의 검색>
+<br>
+#### <강의 검색>
 ![이미지 13](https://user-images.githubusercontent.com/36254544/229111901-1acf8b52-73b1-4689-811e-fc7322a6a677.png)
-<br><관심과목 조회>
+<br>
+#### <관심과목 조회>
 ![이미지 005](https://user-images.githubusercontent.com/36254544/229111245-3b91fbd8-8296-4d5f-b563-d5d8a8fb494a.png)
-<br><신청과목 조회
+<br>
+#### <신청과목 조회>
 ![이미지 006](https://user-images.githubusercontent.com/36254544/229111253-b0803cd5-fd18-46b2-833a-65fdf0a1b6fa.png)
 
-
+<br><br>
 ## 🖥배포 URL
 http://sugangpage.eba-iyefhen2.ap-northeast-2.elasticbeanstalk.com/
 <br><br><br><br>
