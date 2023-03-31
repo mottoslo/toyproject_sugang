@@ -19,7 +19,7 @@
 - `왕정민` - 신청내역, JWT토큰
 <br><br>
 
-## 기술스택 & 툴
+## 🛠기술스택 & 툴
 SKILL
 <br>
 <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"> <img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=CSS&logoColor=white"> <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jQuery&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"> <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=HTML&logoColor=white"> <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white"> <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=Flask&logoColor=white">
@@ -29,15 +29,15 @@ TOOL
 <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white"> <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white"> <img src="https://img.shields.io/badge/Sourcetree-0052CC?style=for-the-badge&logo=Sourcetree&logoColor=white"> <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white"> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white">
 <br><br>
 
-## 초안 API명세
+## ✏초안 API명세
 우리 초기버전 사진 넣기
 <br><br>
 
-## API 명세
+## 📑API 명세
 이미지 첨부
 <br><br>
 
-## 데이터 명세
+## 📈데이터 명세
 ```
 수업시간 변수 : [{'day' : '요일',
                              'start_time' : '1400',
@@ -74,7 +74,7 @@ db.class_list = {'class_name' : '수업 이름',
 ```
 
 
-## API 구현 기능
+## 📌API 구현 기능
 - 회원가입 기능
 - 로그인 기능
 - 로그인 인증 기능
@@ -89,7 +89,7 @@ db.class_list = {'class_name' : '수업 이름',
 - 시간표 그리기 기능
 <br><br>
 
-## 트러블슈팅
+## 💡트러블슈팅
 `강재형`
 - [x]  ~~ormData의 body에 리스트를 태울 수 없는 문제 발생~~
 <br>→반복문으로 해결
@@ -100,9 +100,13 @@ db.class_list = {'class_name' : '수업 이름',
 
 `김석호`
 - [x]  ~~로그인 페이지  로그인버튼 /회원가입 버튼 만들기~~
+<br>→ html의 태그 기능을 이해하고 onchlick버튼 기능을 사용하여 해결할 수 있었다.
 - [x]  ~~회원가입 완료 시 로그인페이지로 이동~~
+<br>→ window.location.reload() 를 참고해서 접근
+<br>→ window.location.herf(’/이동할 페이지’) 해당 코드를 통해 해결할 수 있었다.
+<br>→ 회원가입시 로그인페이지로 이동하는 개념과 if / else 조건문을 참고하여 해결 할 수 있었다.
 - [x]  ~~로그인 성공시 알림창 후 다음페이지로 이동/실패시 안내창과 함께 로그인페이지 머무르기~~
-<br>→ 능력 부족으로 인해 구현 못함 공부를 더 해야할 필요가 있다.
+<br>→ 회원가입시 로그인페이지로 이동하는 개념과 if / else 조건문을 참고하여 해결 할 수 있었다.
 - [ ]  로그인 시 토큰 발생 후 쿠키로 저장
 <br>→ 능력 부족으로 인해 구현 못함 공부를 더 해야할 필요가 있다.
 
@@ -133,7 +137,7 @@ db.class_list = {'class_name' : '수업 이름',
 <br>→
 <br>
 
-## 결과물
+## ✨결과물
 
 <로그인>
 ![이미지 001](https://user-images.githubusercontent.com/36254544/229111205-0d93b11b-174c-44d3-b3c2-e2e653963f0b.png)
@@ -147,7 +151,7 @@ db.class_list = {'class_name' : '수업 이름',
 ![이미지 006](https://user-images.githubusercontent.com/36254544/229111253-b0803cd5-fd18-46b2-833a-65fdf0a1b6fa.png)
 
 
-## 배포 URL
+## 🖥배포 URL
 http://sugangpage.eba-iyefhen2.ap-northeast-2.elasticbeanstalk.com/
 <br><br><br><br>
 
