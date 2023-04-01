@@ -158,6 +158,9 @@ db.class_list = {'class_name' : '수업 이름',
 <br>→ 리스트 안의 내용까지 접근 못하는 것과 마찬가지로 리스트가 그 안으로 삽입되는 것이 아니라 리스트 자체가 잘 수정되었음
 - [x]  ~~표 css~~
 <br>→ 부트스트랩을 이용해 테이블을 심플하게 디자인 함
+- [x] ~~Auth 함수 return 값을 못 받아오는 문제~~
+<br>→ Auth 함수 내의 ajax 옵션에 async가 없었는데 넣어주고 false로 값을 줬더니 잘 받아옴
+<br>→ 참고 : https://recollectionis.tistory.com/167
 - [ ]  사이드바 토글
 <br>→ 추후 수정 예정
 <br>
