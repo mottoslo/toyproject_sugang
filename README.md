@@ -145,7 +145,7 @@ db.class_list = {'class_name' : '수업 이름',
 - [x] ~~enrollment 리스트에서 과목코드를 추출하여 해당 과목의 상세정보를 class_list 컬렉션에서 가져오기~~
 <br>→ enrollment가 리스트여서 받아와서 한꺼풀 벗기고 for문을 돌려 해결!
 - [x]  ~~myclasspage에서 표 작게 나오는 부분 해결하기~~
-<br>→ 관심강의 페이지와 신청과목 페이지의 마크업 구조가 달라서 이 부분을 맞춰줌 (추후 수정)
+<br>→ 시간표 테이블을 담고있는 div의 css가 누락됨. 누락된 부분 수정으로 해결함
 - [x]  ~~체크박스를 이용하여 여러 개를 한꺼번에 삭제하는 기능 만들기~~
 <br>→ 버튼의 name 속성을 같은 이름으로 해야 함 
 <br>→ 체크 된 체크박스의 id를 가져와서 each() 메서드를 이용해 리스트에 push()하여 넘김
@@ -183,8 +183,11 @@ db.class_list = {'class_name' : '수업 이름',
 ![이미지 006](https://user-images.githubusercontent.com/36254544/229111253-b0803cd5-fd18-46b2-833a-65fdf0a1b6fa.png)
 
 <br><br>
-## 🖥배포 URL
+## 🖥 URL
+#### 배포 URL
 http://sugangpage.eba-iyefhen2.ap-northeast-2.elasticbeanstalk.com/
+#### Notion URL
+https://www.notion.so/11-225872a369314db6b2e46ea3b2a6cbfc
 <br><br><br><br>
 
 
